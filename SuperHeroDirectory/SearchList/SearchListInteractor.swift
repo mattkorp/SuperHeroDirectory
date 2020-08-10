@@ -37,7 +37,7 @@ final class SearchListInteractor {
 extension SearchListInteractor: SearchListInteractorProtocol {
 
     func fetch() {
-        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 30) { [weak self] result in
+        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50) { [weak self] result in
             guard let self = `self` else { return }
             switch result {
             case .success((let heroes, let newOffset)):
@@ -51,7 +51,7 @@ extension SearchListInteractor: SearchListInteractorProtocol {
     
     func fetch(name: String) {
         offset = 0
-        getSuperheroUseCase.fetchHeroes(named: name, offset: offset, limit: 30) { [weak self] result in
+        getSuperheroUseCase.fetchHeroes(named: name, offset: offset, limit: 50) { [weak self] result in
             guard let self = `self` else { return }
             switch result {
             case .success((let heroes, let newOffset)):

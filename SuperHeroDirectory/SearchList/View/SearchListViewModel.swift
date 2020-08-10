@@ -12,7 +12,6 @@ protocol SearchListViewPresentable {
     var superhero: Superhero { get set }
     var name: String { get }
     var bio: String? { get }
-    var imagePath: String? { get }
 }
 
 // MARK: - SearchListViewModel Module Entity
@@ -27,15 +26,5 @@ struct SearchListViewModel: SearchListViewPresentable {
     
     var bio: String? {
         return superhero.description
-    }
-    
-    var imagePath: String? {
-        guard let path = superhero.thumbnail.path,
-            let format = superhero.thumbnail.format,
-            !path.contains("image_not_available") else {
-            return nil
-        }
-
-        return path + "." + format
     }
 }

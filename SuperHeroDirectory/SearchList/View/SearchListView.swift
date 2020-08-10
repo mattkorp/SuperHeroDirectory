@@ -139,8 +139,8 @@ extension SearchListView: UITableViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        // Change 10.0 to adjust the distance from bottom
-        if maximumOffset - currentOffset <= 10.0 {
+        // Change 5.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 5.0 {
             delegate?.fetch()
         }
     }

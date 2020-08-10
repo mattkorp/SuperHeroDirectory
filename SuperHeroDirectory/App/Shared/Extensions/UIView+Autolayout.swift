@@ -20,6 +20,7 @@ extension UIView {
     
     func pinToSafeAreaTop() {
         guard let superview = superview else { return }
+        self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.leadingAnchor),
             trailingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.trailingAnchor),
@@ -28,6 +29,7 @@ extension UIView {
     
     func pinToSafeAreaBottom() {
         guard let superview = superview else { return }
+        self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.leadingAnchor),
             bottomAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.bottomAnchor),
@@ -36,6 +38,7 @@ extension UIView {
 
     func pinToSafeArea() {
         guard let superview = superview else { return }
+        self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             leadingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.leadingAnchor),
             bottomAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.bottomAnchor),

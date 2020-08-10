@@ -38,7 +38,7 @@ final class SearchListRouter {
 extension SearchListRouter: SearchListRouterProtocol {
 
     func showDetails(with hero: Superhero) {
-//        let detailsRouter = DetailsRouter(superhero: hero)
-//        viewController.navigationController?.pushViewController(detailsRouter.viewController, animated: true)
+        let detailsRouter = DetailsRouter(superhero: hero)
+        viewController.navigationController?.pushViewController(detailsRouter.viewController, animated: true)
     }
 }

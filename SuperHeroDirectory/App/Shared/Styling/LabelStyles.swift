@@ -76,4 +76,4 @@ let mediumBlackMultilineStyle = multiLineStyle
 let largeGreenStyle = dragonGreenStyle
     + paragraph24TextStyle
 
-let moneyStyle = largeGreenStyle
+let greenStyle = largeGreenStyle

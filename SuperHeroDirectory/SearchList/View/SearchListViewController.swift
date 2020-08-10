@@ -88,7 +88,6 @@ extension SearchListViewController: SearchListViewUIDelegate {
         }
     }
 
-
     func refresh() {
         presentables = nil
         presenter.refresh()
