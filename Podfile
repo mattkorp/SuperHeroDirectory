@@ -7,7 +7,6 @@ target 'SuperHeroDirectory' do
 
   # Pods for SuperHeroDirectory
   pod 'Nuke', '9.0'
-  pod 'DropDown', '2.3.13'
   
   target 'SuperHeroDirectoryTests' do
     inherit! :search_paths

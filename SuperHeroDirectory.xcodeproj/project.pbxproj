@@ -387,9 +387,9 @@
 		469B600424DDE81900D01913 /* SuperHeroDirectory */ = {
 			isa = PBXGroup;
 			children = (
-				4676F37A24DEF73600189E2F /* Details */,
-				4676F37924DEF72400189E2F /* SearchList */,
 				469B603524DDE8A100D01913 /* App */,
+				4676F37924DEF72400189E2F /* SearchList */,
+				4676F37A24DEF73600189E2F /* Details */,
 			);
 			path = SuperHeroDirectory;
 			sourceTree = "<group>";

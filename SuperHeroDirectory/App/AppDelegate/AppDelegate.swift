@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var searchListRouter: SearchListRouter!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+                
         let container = Container()
         searchListRouter = SearchListRouter(container: container)
         setupWindow(root: searchListRouter.viewController)
