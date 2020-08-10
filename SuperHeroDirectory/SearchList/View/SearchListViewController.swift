@@ -13,7 +13,7 @@ import UIKit
 protocol SearchListViewControllerProtocol: BaseViewProtocol {
     // Update UI with value returned.
     /// Set the view Object of view model
-    func consume(presentables: [SearchListViewPresentable])
+    func consume(presentables: [SearchListViewPresentable], isRefreshing: Bool)
     /// Show alert if failure
     func show(title: String, message: String)
 }
@@ -55,10 +55,10 @@ final class SearchListViewController: BaseViewController {
 
 extension SearchListViewController: SearchListViewControllerProtocol {
 
-    func consume(presentables: [SearchListViewPresentable]) {
+    func consume(presentables: [SearchListViewPresentable], isRefreshing: Bool) {
         isLoadingMore = false
         
-        if let old = self.presentables {
+        if let old = self.presentables, !isRefreshing {
             self.presentables = old + presentables
         } else {
             self.presentables = presentables
@@ -77,7 +77,10 @@ extension SearchListViewController: SearchListViewControllerProtocol {
 // MARK: - OverviewViewUIDelegate - implementation
 
 extension SearchListViewController: SearchListViewUIDelegate {
-
+    func fetch(name: String) {
+        presenter.fetch(name: name)
+    }
+    
     func fetch() {
         if !isLoadingMore {
             isLoadingMore = true
@@ -87,6 +90,7 @@ extension SearchListViewController: SearchListViewUIDelegate {
 
 
     func refresh() {
+        presentables = nil
         presenter.refresh()
     }
 

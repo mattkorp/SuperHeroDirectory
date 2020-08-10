@@ -13,6 +13,7 @@ import UIKit
 protocol SearchListInteractorProtocol {
     // Fetch Object from Data Layer
     func fetch()
+    func fetch(name: String)
     func refresh()
 }
 
@@ -41,7 +42,21 @@ extension SearchListInteractor: SearchListInteractorProtocol {
             switch result {
             case .success((let heroes, let newOffset)):
                 self.offset = newOffset
-                self.presenter?.interactor(didFetch: heroes)
+                self.presenter?.interactor(didFetch: heroes, isRefreshing: false)
+            case .failure(let error):
+                self.presenter?.interactor(didFailWith: error)
+            }
+        }
+    }
+    
+    func fetch(name: String) {
+        offset = 0
+        getSuperheroUseCase.fetchHeroes(named: name, offset: offset, limit: 30) { [weak self] result in
+            guard let self = `self` else { return }
+            switch result {
+            case .success((let heroes, let newOffset)):
+                self.offset = newOffset
+                self.presenter?.interactor(didFetch: heroes, isRefreshing: true)
             case .failure(let error):
                 self.presenter?.interactor(didFailWith: error)
             }

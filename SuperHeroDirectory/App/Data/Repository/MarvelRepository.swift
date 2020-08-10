@@ -28,7 +28,7 @@ final class MarvelRepository {
                 return [
                         "limit": limit,
                         "offset": offset,
-                        "startsWith": named,
+                        "nameStartsWith": named,
                         "ts": APIKeys.dateHash.0,
                         "apikey": APIKeys.marvelPublic,
                         "hash": APIKeys.dateHash.1]

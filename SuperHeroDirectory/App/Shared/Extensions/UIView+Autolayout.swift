@@ -17,6 +17,22 @@ extension UIView {
             trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topAnchor.constraint(equalTo: view.topAnchor)])
     }
+    
+    func pinToSafeAreaTop() {
+        guard let superview = superview else { return }
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.leadingAnchor),
+            trailingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.trailingAnchor),
+            topAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.topAnchor)])
+    }
+    
+    func pinToSafeAreaBottom() {
+        guard let superview = superview else { return }
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.leadingAnchor),
+            bottomAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.bottomAnchor),
+            trailingAnchor.constraint(equalTo: superview.saferAreaLayoutGuide.trailingAnchor)])
+    }
 
     func pinToSafeArea() {
         guard let superview = superview else { return }

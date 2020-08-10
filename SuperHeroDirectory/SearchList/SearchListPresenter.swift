@@ -13,10 +13,11 @@ import UIKit
 protocol SearchListPresenterProtocol {
     /// The presenter fetches data from Interactor
     func fetch()
+    func fetch(name: String)
     /// The presenter reload data from the interactor
     func refresh()
     /// The Interactor informs Presenter fetch was successful
-    func interactor(didFetch data: ([Superhero]))
+    func interactor(didFetch data: ([Superhero]), isRefreshing: Bool)
     /// The Interactor informs Presenter fetch failed
     func interactor(didFailWith error: Error)
     /// View did Select group
@@ -40,16 +41,23 @@ extension SearchListPresenter: SearchListPresenterProtocol {
         view?.startLoading()
         interactor?.fetch()
     }
+    
+    func fetch(name: String) {
+        guard name.count > 2 else {
+            return
+        }
+        interactor?.fetch(name: name)
+    }
 
     func refresh() {
         interactor?.refresh()
     }
 
-    func interactor(didFetch data: ([Superhero])) {
+    func interactor(didFetch data: ([Superhero]), isRefreshing: Bool) {
         let presentables = data.map { superhero in
             SearchListViewModel(superhero: superhero)
         }
-        view?.consume(presentables: presentables)
+        view?.consume(presentables: presentables, isRefreshing: isRefreshing)
         view?.stopLoading()
     }
 

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Nuke
 
 // MARK: SearchListViewUIDelegate
 
@@ -16,6 +15,7 @@ protocol SearchListViewUIDelegate {
     func view(didSelect presentable: SearchListViewPresentable)
     /// Fetch data from endpoint
     func fetch()
+    func fetch(name: String)
     /// Re-Fetch data from endpoint
     func refresh()
 }
@@ -37,7 +37,9 @@ final class SearchListView: UIView {
 
     // MARK: - Private
     private var presentables: [SearchListViewPresentable]?
+    // TODO: move tableView and searchView to own classes
     private let tableView = TableView()
+    private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
 
     // MARK: - viewcontroller lifecycle
@@ -60,6 +62,11 @@ final class SearchListView: UIView {
 
     func reloadData() {
         presentables = dataSource?.object()
+        
+        if presentables?.isEmpty == true {
+            // TODO: show empty message
+        }
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -77,6 +84,12 @@ final class SearchListView: UIView {
 private extension SearchListView {
 
     func setupUI() {
+        addSubview(searchBar)
+        searchBar.delegate = self
+        searchBar.placeholder = "SEARCH"
+        searchBar.showsCancelButton = true
+        hideKeyboardWhenTappedAround()
+        
         addSubview(tableView)
         tableView.configure(delegate: self, dataSource: self)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
@@ -84,7 +97,11 @@ private extension SearchListView {
     }
 
     func setupConstraints() {
-        tableView.pinToSafeArea()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.pinToSafeAreaTop()
+        searchBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        tableView.pinToSafeAreaBottom()
+        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
     }
 }
 
@@ -126,5 +143,44 @@ extension SearchListView: UITableViewDelegate {
         if maximumOffset - currentOffset <= 10.0 {
             delegate?.fetch()
         }
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension SearchListView: UISearchBarDelegate {
+
+    @objc
+    func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        endSearchBarEditing(searchBar)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        delegate?.fetch(name: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        endSearchBarEditing(searchBar)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        endSearchBarEditing(searchBar)
+        refetchData()
+    }
+}
+
+// MARK: - Private helpers
+
+extension SearchListView {
+        
+    private func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        tap.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tap)
+    }
+    
+    private func endSearchBarEditing(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.endEditing(true)
     }
 }
