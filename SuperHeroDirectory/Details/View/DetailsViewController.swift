@@ -21,11 +21,8 @@ protocol DetailsViewControllerProtocol: BaseViewProtocol {
 final class DetailsViewController: BaseViewController {
     
     var presenter: DetailsPresenterProtocol!
-
     var detailsInfoView: DetailsInfoView!
     
-//    private var presentable: DetailsViewPresentable?
-
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,19 +47,9 @@ final class DetailsViewController: BaseViewController {
 extension DetailsViewController: DetailsViewControllerProtocol {
 
     func consume(presentable: DetailsViewPresentable) {
-//        self.presentable = presentable
-//        title = L10n.Details.Navigation.title(presentables[0].flight.outbound.route.destination)
+        title = presentable.name
         DispatchQueue.main.async {
             self.detailsInfoView.presentable = presentable
         }
     }
 }
-
-//// MARK: - DetailsViewUIDataSource - implementation
-//
-//extension DetailsViewController: DetailsViewDataSource {
-//    // Pass data to data source
-//    func object() -> [DetailsViewPresentable]? {
-//        presentables
-//    }
-//}

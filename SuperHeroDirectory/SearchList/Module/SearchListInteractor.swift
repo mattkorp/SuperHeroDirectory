@@ -11,9 +11,13 @@ import UIKit
 // MARK: - SearchListInteractorProtocol - declaration
 
 protocol SearchListInteractorProtocol {
-    // Fetch Object from Data Layer
+    // Fetch heroes from Data Layer (paginated)
     func fetch()
-    func fetch(name: String)
+    // Fetch heroes from Data Layer name starting with
+    func fetch(startsWith: String)
+    // Fetch more heroes from Data Layer name starting with (paginated)
+    func fetchMore(startsWith: String)
+    // Fetch heroes from Data Layer
     func refresh()
 }
 
@@ -35,33 +39,41 @@ final class SearchListInteractor {
 // MARK: - SearchListInteractorProtocol - implementation
 
 extension SearchListInteractor: SearchListInteractorProtocol {
-
+    
+     func refresh() {
+         resetPaginationOffset()
+         fetch(named: nil)
+     }
+    
     func fetch() {
-        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50)
-            .onSuccess { (heroes, newOffset) in
-                self.offset = newOffset
-                self.presenter?.interactor(didFetch: heroes, isRefreshing: false)
-            }
-            .onFailure { error in
-                self.presenter?.interactor(didFailWith: error)
-            }
+        fetch(named: nil)
     }
     
-    func fetch(name: String) {
-        offset = 0
-        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50)
-            .onSuccess { (heroes, newOffset) in
-                self.offset = newOffset
-                self.presenter?.interactor(didFetch: heroes, isRefreshing: true)
-            }
-            .onFailure { error in
-                self.presenter?.interactor(didFailWith: error)
-            }
+    func fetch(startsWith: String) {
+        resetPaginationOffset()
+        fetch(named: startsWith)
     }
     
-    func refresh() {
+    func fetchMore(startsWith: String) {
+        fetch(named: startsWith)
+    }
+}
+
+// MARK: - Private methods
+
+private extension SearchListInteractor {
+    
+    func fetch(named: String? = nil) {
+        getSuperheroUseCase.fetchHeroes(named: named, offset: offset, limit: 50)
+            .onSuccess { (heroes, newOffset) in
+                self.offset = newOffset
+                self.presenter?.interactor(didFetch: heroes)
+            }
+            .onFailure { self.presenter?.interactor(didFailWith: $0) }
+    }
+    
+    func resetPaginationOffset() {
         offset = 0
-        fetch()
     }
 }
 

@@ -56,9 +56,9 @@ private extension DetailsInfoView {
     }
 }
 
-// MARK: - NibLoadable, Reusable
+// MARK: - NibLoadable
 
-extension DetailsInfoView: NibLoadable, Reusable {
+extension DetailsInfoView: NibLoadable {
 
     override func awakeFromNib() {
         super.awakeFromNib()

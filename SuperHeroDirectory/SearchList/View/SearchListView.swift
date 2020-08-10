@@ -15,7 +15,10 @@ protocol SearchListViewUIDelegate {
     func view(didSelect presentable: SearchListViewPresentable)
     /// Fetch data from endpoint
     func fetch()
-    func fetch(name: String)
+    /// Fetch data with name fragment
+    func fetch(searchText: String)
+    /// Fetch data with name fragment
+    func fetchMore(searchText: String)
     /// Re-Fetch data from endpoint
     func refresh()
 }
@@ -76,6 +79,12 @@ final class SearchListView: UIView {
     @objc
     func refetchData() {
         delegate?.refresh()
+        tableView.setContentOffset(.zero, animated: true)
+    }
+    
+    func scrollToTop() {
+        let topOffest = CGPoint(x: 0, y: -tableView.contentInset.top)
+        tableView.setContentOffset(topOffest, animated: true)
     }
 }
 
@@ -103,6 +112,17 @@ private extension SearchListView {
         tableView.pinToSafeAreaBottom()
         tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
     }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        tap.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(tap)
+    }
+    
+    func endSearchBarEditing(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.endEditing(true)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -117,10 +137,16 @@ extension SearchListView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-        cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = presentables?[indexPath.row].name
+
+        configure(cell, title: presentables?[indexPath.row].name)
         
         return cell
+    }
+    
+    func configure(_ cell: UITableViewCell, title: String?) {
+        cell.accessoryType = .disclosureIndicator
+        cell.textLabel?.text = title
+        cell.textLabel.flatMap { $0 |> largeDarkMultilineStyle }
     }
 }
 
@@ -142,7 +168,10 @@ extension SearchListView: UITableViewDelegate {
 
         // Change 5.0 to adjust the distance from bottom
         if maximumOffset - currentOffset <= 5.0 {
-            delegate?.fetch()
+            searchBar.text.flatMap {
+                $0.isEmpty ? delegate?.fetch() : delegate?.fetchMore(searchText: $0)
+            }
+
         }
     }
 }
@@ -157,7 +186,7 @@ extension SearchListView: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        delegate?.fetch(name: searchText)
+        delegate?.fetch(searchText: searchText)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -167,21 +196,5 @@ extension SearchListView: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         endSearchBarEditing(searchBar)
         refetchData()
-    }
-}
-
-// MARK: - Private helpers
-
-extension SearchListView {
-        
-    private func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
-        tap.cancelsTouchesInView = false
-        tableView.addGestureRecognizer(tap)
-    }
-    
-    private func endSearchBarEditing(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.endEditing(true)
     }
 }

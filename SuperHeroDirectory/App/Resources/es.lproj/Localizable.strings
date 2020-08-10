@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  SuperHeroDirectory
+
+  Created by Matthew Korporaal on 8/10/20.
+  Copyright © 2020 Matthew Korporaal. All rights reserved.
+*/
+
+"general.error.title" = "Error";
+"general.error.text" = "Algo salió mal.";
+"general.alert.ok.title" = "OK";
+"searchList.navigation.title" = "Directorio de Superhéroes";
+"detail.bio.title" = "BIO:";
+"detail.bio.text" = "Descripción no disponible..";
+

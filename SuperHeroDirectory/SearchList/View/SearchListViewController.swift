@@ -13,7 +13,7 @@ import UIKit
 protocol SearchListViewControllerProtocol: BaseViewProtocol {
     // Update UI with value returned.
     /// Set the view Object of view model
-    func consume(presentables: [SearchListViewPresentable], isRefreshing: Bool)
+    func consume(presentables: [SearchListViewPresentable])
     /// Show alert if failure
     func show(title: String, message: String)
 }
@@ -46,8 +46,9 @@ final class SearchListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Superhero Directory" // L10n.Overview.Navigation.title
+        title = L10n.SearchList.Navigation.title
         presenter.fetch()
+        tapLabelToScrollToTheTop()
     }
 }
 
@@ -55,15 +56,11 @@ final class SearchListViewController: BaseViewController {
 
 extension SearchListViewController: SearchListViewControllerProtocol {
 
-    func consume(presentables: [SearchListViewPresentable], isRefreshing: Bool) {
+    func consume(presentables: [SearchListViewPresentable]) {
         isLoadingMore = false
         
-        if let old = self.presentables, !isRefreshing {
-            self.presentables = old + presentables
-        } else {
-            self.presentables = presentables
-        }
-       
+        self.presentables = self.presentables.flatMap { $0 + presentables } ?? presentables
+
         DispatchQueue.main.async {
             self.searchListView.reloadData()
         }
@@ -77,8 +74,14 @@ extension SearchListViewController: SearchListViewControllerProtocol {
 // MARK: - OverviewViewUIDelegate - implementation
 
 extension SearchListViewController: SearchListViewUIDelegate {
-    func fetch(name: String) {
-        presenter.fetch(name: name)
+    
+    func fetch(searchText: String) {
+        presentables = nil
+        presenter.fetch(startsWith: searchText)
+    }
+    
+    func fetchMore(searchText: String) {
+        presenter.fetch(startsWith: searchText)
     }
     
     func fetch() {
@@ -104,5 +107,24 @@ extension SearchListViewController: SearchListViewDataSource {
     // Pass data to data source
     func object() -> [SearchListViewPresentable]? {
         presentables
+    }
+}
+
+extension SearchListViewController {
+    
+    func tapLabelToScrollToTheTop() {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+        label.text = navigationItem.title
+        label |> navigationItemTextStyle
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        label.addGestureRecognizer(tapGestureRecognizer)
+        label.isUserInteractionEnabled = true
+        navigationItem.titleView = label
+    }
+        
+    @objc
+    func labelTapped(_ sender: UITapGestureRecognizer) {
+        searchListView.scrollToTop()
     }
 }

@@ -27,8 +27,7 @@ open class BaseViewController: UIViewController, BaseViewProtocol {
                              completion: (() -> Void)?) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-//        let button = buttonTitle.isEmpty ? L10n.General.Alert.Ok.text : buttonTitle
-            let button = buttonTitle.isEmpty ? "OK" : buttonTitle
+            let button = buttonTitle.isEmpty ? L10n.General.Alert.Ok.title : buttonTitle
             alert.addAction(.init(title: button, style: .destructive, handler: { _ in completion?() }))
             self.navigationController?.present(alert, animated: true, completion: nil)
         }

@@ -27,12 +27,12 @@ struct DetailsViewModel: DetailsViewPresentable {
     }
     
     var nameLabel: String {
-        return "BIO:"
+        return L10n.Detail.Bio.title
     }
     
     var bio: String {
         guard let description = superhero.description, !description.isEmpty else {
-            return "description unavailable"
+            return L10n.Detail.Bio.text
         }
         return description
     }

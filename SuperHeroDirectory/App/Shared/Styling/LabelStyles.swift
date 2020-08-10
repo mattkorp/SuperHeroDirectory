@@ -54,6 +54,13 @@ func paragraph24TextStyle(_ label: UILabel) {
     label.font = UIFont.boldSystemFont(ofSize: 24)
 }
 
+func navigationItemTextStyle(_ label: UILabel) {
+    label.textColor = .darkText
+    label.font = UIFont.boldSystemFont(ofSize: 20)
+    label.backgroundColor = .clear
+    label.textAlignment = .center
+}
+
 // Composed styles
 
 let smallSilverDarkStyle = silverDarkStyle
@@ -74,6 +81,10 @@ let mediumBlackMultilineStyle = multiLineStyle
     + paragraph16TextStyle
 
 let largeGreenStyle = dragonGreenStyle
+    + paragraph24TextStyle
+
+let largeDarkMultilineStyle = darkGreyStyle
+    + multiLineStyle
     + paragraph24TextStyle
 
 let greenStyle = largeGreenStyle

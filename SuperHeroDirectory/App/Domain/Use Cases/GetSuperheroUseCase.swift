@@ -9,6 +9,7 @@
 import Foundation
 
 protocol GetSuperheroUseCaseProtocol {
+    /// Fetch characters from marvel repository
     func fetchHeroes(named: String?, offset: Int, limit: Int) -> Promise<([Superhero], Int)>
 }
 

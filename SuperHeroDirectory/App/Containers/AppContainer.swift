@@ -11,4 +11,4 @@ import Foundation
 // MARK: - AppContainer
 
 // Adopts all sub-module containers
-protocol AppContainer: SearchListContainer { }
+protocol AppContainer: SearchListContainer, DetailsContainer { }

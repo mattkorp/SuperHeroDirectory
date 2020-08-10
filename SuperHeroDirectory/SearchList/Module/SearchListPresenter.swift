@@ -13,11 +13,14 @@ import UIKit
 protocol SearchListPresenterProtocol {
     /// The presenter fetches data from Interactor
     func fetch()
-    func fetch(name: String)
+    /// The presenter fetches names from Interactor with search parameter
+    func fetch(startsWith: String)
+    /// Presenter fetches more of the current string
+    func fetchMore(startsWith: String)
     /// The presenter reload data from the interactor
     func refresh()
     /// The Interactor informs Presenter fetch was successful
-    func interactor(didFetch data: ([Superhero]), isRefreshing: Bool)
+    func interactor(didFetch data: ([Superhero]))
     /// The Interactor informs Presenter fetch failed
     func interactor(didFailWith error: Error)
     /// View did Select group
@@ -42,31 +45,33 @@ extension SearchListPresenter: SearchListPresenterProtocol {
         interactor?.fetch()
     }
     
-    func fetch(name: String) {
-        guard name.count > 2 else {
+    func fetch(startsWith: String) {
+        guard startsWith.count > 1 else {
             return
         }
-        interactor?.fetch(name: name)
+        interactor?.fetch(startsWith: startsWith)
+    }
+    
+    func fetchMore(startsWith: String) {
+        interactor?.fetchMore(startsWith: startsWith)
     }
 
     func refresh() {
         interactor?.refresh()
     }
 
-    func interactor(didFetch data: ([Superhero]), isRefreshing: Bool) {
+    func interactor(didFetch data: ([Superhero])) {
         let presentables = data.map { superhero in
             SearchListViewModel(superhero: superhero)
         }
-        view?.consume(presentables: presentables, isRefreshing: isRefreshing)
+        view?.consume(presentables: presentables)
         view?.stopLoading()
     }
 
     func interactor(didFailWith error: Error) {
         view?.stopLoading()
-        let errorMessage = (error as? HTTPError).flatMap { $0.localizedDescription } ?? "error"
-//            ?? L10n.General.Error.text
-//        view?.show(title: L10n.General.Error.title, message: errorMessage)
-        view?.show(title: "Error", message: errorMessage)
+        let errorMessage = (error as? HTTPError).flatMap { $0.localizedDescription } ?? L10n.General.Error.text
+        view?.show(title: L10n.General.Error.title, message: errorMessage)
     }
 
     func view(didSelect presentable: SearchListViewPresentable) {
