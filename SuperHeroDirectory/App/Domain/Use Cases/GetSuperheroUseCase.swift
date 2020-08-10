@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GetSuperheroUseCaseProtocol {
-    func fetchHeroes(named: String?, offset: Int, limit: Int, completion: @escaping ResultVoidClosure<([Superhero], Int)>)
+    func fetchHeroes(named: String?, offset: Int, limit: Int) -> Promise<([Superhero], Int)>
 }
 
 struct GetSuperheroUseCase {
@@ -23,15 +23,14 @@ struct GetSuperheroUseCase {
 
 extension GetSuperheroUseCase: GetSuperheroUseCaseProtocol {
     
-    func fetchHeroes(named: String?, offset: Int, limit: Int, completion: @escaping ResultVoidClosure<([Superhero], Int)>) {
-        
-        marvelRepository.get(named: named, offset: offset, limit: limit) { results in
-            switch results {
-                case .success(let superheroes):
-                    completion(.success((superheroes.data?.results ?? [], offset + limit)))
-                case .failure(let error):
-                    completion(.failure(error))
-            }
+    func fetchHeroes(named: String?, offset: Int, limit: Int) -> Promise<([Superhero], Int)> {
+        return Promise<([Superhero], Int)> { fulfill, reject in
+            self.marvelRepository.get(named: named, offset: offset, limit: limit)
+                .thenMap { superheroes -> ([Superhero], Int) in
+                    (superheroes.data?.results ?? [], offset + limit)
+                }
+                .onSuccess(fulfill)
+                .onFailure(reject)
         }
     }
 }

@@ -37,30 +37,26 @@ final class SearchListInteractor {
 extension SearchListInteractor: SearchListInteractorProtocol {
 
     func fetch() {
-        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50) { [weak self] result in
-            guard let self = `self` else { return }
-            switch result {
-            case .success((let heroes, let newOffset)):
+        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50)
+            .onSuccess { (heroes, newOffset) in
                 self.offset = newOffset
                 self.presenter?.interactor(didFetch: heroes, isRefreshing: false)
-            case .failure(let error):
+            }
+            .onFailure { error in
                 self.presenter?.interactor(didFailWith: error)
             }
-        }
     }
     
     func fetch(name: String) {
         offset = 0
-        getSuperheroUseCase.fetchHeroes(named: name, offset: offset, limit: 50) { [weak self] result in
-            guard let self = `self` else { return }
-            switch result {
-            case .success((let heroes, let newOffset)):
+        getSuperheroUseCase.fetchHeroes(named: nil, offset: offset, limit: 50)
+            .onSuccess { (heroes, newOffset) in
                 self.offset = newOffset
                 self.presenter?.interactor(didFetch: heroes, isRefreshing: true)
-            case .failure(let error):
+            }
+            .onFailure { error in
                 self.presenter?.interactor(didFailWith: error)
             }
-        }
     }
     
     func refresh() {

@@ -44,7 +44,7 @@ protocol RequestType {
     var parameters: Parameters? { get }
     var headers: HTTPHeaders? { get }
 
-    func responseObject<T: Decodable>(_ completion: @escaping ResultVoidClosure<T>)
+    func responseObject<T: Decodable>() -> Promise<T>
 }
 
 // Request - Public properties
@@ -61,19 +61,18 @@ public struct Request: RequestType {
 
 public extension Request {
 
-    func responseObject<T: Decodable>(_ completion: @escaping ResultVoidClosure<T>) {
-        response { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let model = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(model))
-                } catch (let error) {
-                    completion(.failure(HTTPError.decodingError(underlying: error)))
+    func responseObject<T: Decodable>() -> Promise<T> {
+        Promise<T> { fulfill, reject in
+            self.response()
+                .onSuccess { data in
+                    do {
+                        let model = try JSONDecoder().decode(T.self, from: data)
+                        fulfill(model)
+                    } catch (let error) {
+                        reject(HTTPError.decodingError(underlying: error))
+                    }
                 }
-            case .failure(let error):
-                completion(.failure(error))
-            }
+                .onFailure(reject)
         }
     }
 }
@@ -82,23 +81,25 @@ public extension Request {
 
 extension Request {
 
-    private func response(_ completion: @escaping (Result<Data, Error>) -> Void) {
-        URLSession.shared.dataTask(with: self.asURLRequest()) { (data, response, error) in
-            if let error = error {
-                completion(.failure(self.converted(error)))
-            } else {
-                let httpResponse = response as! HTTPURLResponse
-                if (200 ... 299) ~= httpResponse.statusCode {
-                    if let data = data {
-                        completion(.success(data))
-                    } else {
-                        completion(.failure(HTTPError.noData))
-                    }
+    private func response() -> Promise<Data> {
+        Promise<Data> { fulfill, reject in
+            URLSession.shared.dataTask(with: self.asURLRequest()) { (data, response, error) in
+                if let error = error {
+                    reject(self.converted(error))
                 } else {
-                    completion(.failure(HTTPError.serverError(response: response)))
+                    let httpResponse = response as! HTTPURLResponse
+                    if (200 ... 299) ~= httpResponse.statusCode {
+                        guard let data = data else {
+                            reject(HTTPError.noData)
+                            return
+                        }
+                        fulfill(data)
+                    } else {
+                        reject(HTTPError.serverError(response: response))
+                    }
                 }
-            }
-        }.resume()
+            }.resume()
+        }
     }
 
     private func asURLRequest() -> URLRequest {

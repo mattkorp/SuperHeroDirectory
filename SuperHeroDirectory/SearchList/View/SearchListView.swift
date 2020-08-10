@@ -131,6 +131,7 @@ extension SearchListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let hero = presentables?[indexPath.row] else { return }
         delegate?.view(didSelect: hero)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
