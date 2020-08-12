@@ -1,0 +1,14 @@
+<SuperHeroDirectory.DetailsInfoView; frame = (0 0; 375 306.333); autoresize = W+H; layer = <CALayer>>
+   | <UIImageView; frame = (50 30; 275 150); clipsToBounds = YES; autoresize = RM+BM; userInteractionEnabled = NO; layer = <CALayer>>
+   | <UILabel; frame = (50 188; 275 28.6667); text = 'Fixture name text'; opaque = NO; autoresize = RM+BM; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   | <UITextView; frame = (50 286.333; 275 0); text = 'Fixture bio text'; clipsToBounds = YES; autoresize = RM+BM; gestureRecognizers = <NSArray>; layer = <CALayer>; contentOffset: {0, 32}; contentSize: {275, 40}; adjustedContentInset: {0, 0, 0, 0}>
+   |    | <_UITextLayoutView; frame = (0 0; 0 0); layer = <CALayer>>
+   |    | <<_UITextContainerView; frame = (0 0; 275 40); layer = <CALayer>> minSize = {0, 0}, maxSize = {1.7976931348623157e+308, 1.7976931348623157e+308}, textContainer = <NSTextContainer size = (275.000000,340282346638528859811704183484516925440.000000); widthTracksTextView = YES; heightTracksTextView = NO>; exclusionPaths =; lineBreakMode = 0>
+   |    |    | <_UITextViewCanvasView; frame = (0 0; 275 40); userInteractionEnabled = NO; layer = <_UITextTiledLayer>>
+   |    |    | <UITextSelectionView; frame = (0 0; 0 0); userInteractionEnabled = NO; layer = <CALayer>>
+   |    | <_UIScrollViewScrollIndicator; frame = (3 26; 266 3); alpha = 0; autoresize = TM; layer = <CALayer>>
+   |    |    | <UIView; frame = (0 0; 266 3); layer = <CALayer>>
+   |    | <_UIScrollViewScrollIndicator; frame = (269 -7; 3 36); alpha = 0; autoresize = LM; layer = <CALayer>>
+   |    |    | <UIView; frame = (0 0; 3 36); layer = <CALayer>>
+   | <UIView; frame = (30 232.667; 315 1); autoresize = RM+BM; layer = <CALayer>>
+   | <UILabel; frame = (50 249.667; 275 28.6667); text = 'Fixture name label'; opaque = NO; autoresize = RM+BM; userInteractionEnabled = NO; layer = <_UILabelLayer>>
