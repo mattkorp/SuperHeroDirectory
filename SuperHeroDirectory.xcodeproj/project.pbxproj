@@ -25,7 +25,6 @@
 		4676F36624DEF38800189E2F /* NibLoadable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35324DEF38800189E2F /* NibLoadable+Extensions.swift */; };
 		4676F36724DEF38800189E2F /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35424DEF38800189E2F /* UIView+Autolayout.swift */; };
 		4676F36C24DEF38800189E2F /* FunctionalComposition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35A24DEF38800189E2F /* FunctionalComposition.swift */; };
-		4676F36D24DEF38800189E2F /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35C24DEF38800189E2F /* TextStyles.swift */; };
 		4676F36E24DEF38800189E2F /* LabelStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35D24DEF38800189E2F /* LabelStyles.swift */; };
 		4676F36F24DEF38800189E2F /* ViewStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35E24DEF38800189E2F /* ViewStyles.swift */; };
 		4676F37024DEF38800189E2F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F35F24DEF38800189E2F /* Colors.swift */; };
@@ -46,7 +45,6 @@
 		4676F3A324DF338500189E2F /* MarvelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A224DF338500189E2F /* MarvelRepository.swift */; };
 		4676F3A524DF367400189E2F /* RawSuperheroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A424DF367400189E2F /* RawSuperheroData.swift */; };
 		4676F3A724E054E200189E2F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A624E054E200189E2F /* String+Extensions.swift */; };
-		469B601D24DDE81B00D01913 /* SuperHeroDirectoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469B601C24DDE81B00D01913 /* SuperHeroDirectoryTests.swift */; };
 		46B4618F24E18AAC00A20AAB /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618724E18AAC00A20AAB /* DetailsPresenter.swift */; };
 		46B4619024E18AAC00A20AAB /* DetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618824E18AAC00A20AAB /* DetailsRouter.swift */; };
 		46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618924E18AAC00A20AAB /* DetailsWireframe.swift */; };
@@ -96,7 +94,6 @@
 		4676F35324DEF38800189E2F /* NibLoadable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NibLoadable+Extensions.swift"; sourceTree = "<group>"; };
 		4676F35424DEF38800189E2F /* UIView+Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		4676F35A24DEF38800189E2F /* FunctionalComposition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalComposition.swift; sourceTree = "<group>"; };
-		4676F35C24DEF38800189E2F /* TextStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		4676F35D24DEF38800189E2F /* LabelStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelStyles.swift; sourceTree = "<group>"; };
 		4676F35E24DEF38800189E2F /* ViewStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStyles.swift; sourceTree = "<group>"; };
 		4676F35F24DEF38800189E2F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -120,7 +117,6 @@
 		4676F3A824E055E400189E2F /* SuperHeroDirectory-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SuperHeroDirectory-Bridging-Header.h"; sourceTree = "<group>"; };
 		469B600224DDE81900D01913 /* SuperHeroDirectory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperHeroDirectory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469B601824DDE81B00D01913 /* SuperHeroDirectoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperHeroDirectoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		469B601C24DDE81B00D01913 /* SuperHeroDirectoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperHeroDirectoryTests.swift; sourceTree = "<group>"; };
 		469B601E24DDE81B00D01913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		469B602724DDE81B00D01913 /* DetailsInfoViewUITestSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoViewUITestSpec.swift; sourceTree = "<group>"; };
 		46B4618724E18AAC00A20AAB /* DetailsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPresenter.swift; sourceTree = "<group>"; };
@@ -275,7 +271,6 @@
 		4676F35B24DEF38800189E2F /* Styling */ = {
 			isa = PBXGroup;
 			children = (
-				4676F35C24DEF38800189E2F /* TextStyles.swift */,
 				4676F35D24DEF38800189E2F /* LabelStyles.swift */,
 				4676F35E24DEF38800189E2F /* ViewStyles.swift */,
 				4676F35F24DEF38800189E2F /* Colors.swift */,
@@ -407,10 +402,9 @@
 			children = (
 				469B602724DDE81B00D01913 /* DetailsInfoViewUITestSpec.swift */,
 				4670740824E40764006228DF /* DetailsViewControllerUITestsSpec.swift */,
-				4670740024E3EA25006228DF /* Mocks */,
-				469B601C24DDE81B00D01913 /* SuperHeroDirectoryTests.swift */,
-				469B601E24DDE81B00D01913 /* Info.plist */,
 				4670740C24E40C23006228DF /* SearchListViewControllerUITestsSpec.swift */,
+				4670740024E3EA25006228DF /* Mocks */,
+				469B601E24DDE81B00D01913 /* Info.plist */,
 			);
 			path = SuperHeroDirectoryTests;
 			sourceTree = "<group>";
@@ -660,7 +654,6 @@
 				4676F36724DEF38800189E2F /* UIView+Autolayout.swift in Sources */,
 				46EA12DD24E19A0000B8058C /* DetailsViewModel.swift in Sources */,
 				4676F37824DEF6D300189E2F /* AppContainer.swift in Sources */,
-				4676F36D24DEF38800189E2F /* TextStyles.swift in Sources */,
 				46B4618F24E18AAC00A20AAB /* DetailsPresenter.swift in Sources */,
 				4676F37224DEF38800189E2F /* NibLoadable.swift in Sources */,
 				46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */,
@@ -701,7 +694,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4670740F24E40C79006228DF /* GetSuperheroUseCaseStub.swift in Sources */,
-				469B601D24DDE81B00D01913 /* SuperHeroDirectoryTests.swift in Sources */,
 				4670740B24E40797006228DF /* SuperheroMock.swift in Sources */,
 				4670740224E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift in Sources */,
 				4670740D24E40C23006228DF /* SearchListViewControllerUITestsSpec.swift in Sources */,
