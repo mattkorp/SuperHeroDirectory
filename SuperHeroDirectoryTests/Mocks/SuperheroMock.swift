@@ -9,7 +9,7 @@
 @testable import SuperHeroDirectory
 import Foundation
 
-struct SuperheroMock: SuperheroProtocol {
+struct SuperheroMock: SuperheroType {
     var name: String? { "Fixture name" }
     var description: String? { "Fixture description" }
     var thumbnail: Image { Image(path: nil, format: nil) }

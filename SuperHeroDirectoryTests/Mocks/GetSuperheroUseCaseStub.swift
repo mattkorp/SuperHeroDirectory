@@ -11,23 +11,23 @@ import Foundation
 
 struct GetSuperheroUseCaseStub: GetSuperheroUseCaseProtocol {
     /// Fetch characters from marvel repository with pagination
-    mutating func fetch() -> Promise<[SuperheroProtocol]> {
+    mutating func fetch() -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
-        return Promise<[SuperheroProtocol]> { fulfill, reject in fulfill([superhero]) }
+        return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository with search parameter
-    mutating func fetch(startsWith: String) -> Promise<[SuperheroProtocol]> {
+    mutating func fetch(startsWith: String) -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
-        return Promise<[SuperheroProtocol]> { fulfill, reject in fulfill([superhero]) }
+        return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository with pagination
-    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroProtocol]> {
+    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
-        return Promise<[SuperheroProtocol]> { fulfill, reject in fulfill([superhero]) }
+        return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository
-    mutating func refresh() -> Promise<[SuperheroProtocol]>{
+    mutating func refresh() -> Promise<[SuperheroType]>{
         let superhero = SuperheroMock()
-        return Promise<[SuperheroProtocol]> { fulfill, reject in fulfill([superhero]) }
+        return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
 }

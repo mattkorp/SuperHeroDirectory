@@ -7,7 +7,6 @@
 //
 
 @testable import SuperHeroDirectory
-import Nimble
 import Quick
 import SnapshotTesting
 
