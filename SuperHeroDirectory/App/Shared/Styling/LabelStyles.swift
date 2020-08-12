@@ -80,11 +80,6 @@ let mediumBlackMultilineStyle = multiLineStyle
     + blackStyle
     + paragraph16TextStyle
 
-let largeGreenStyle = dragonGreenStyle
-    + paragraph24TextStyle
-
 let largeDarkMultilineStyle = darkGreyStyle
     + multiLineStyle
     + paragraph24TextStyle
-
-let greenStyle = largeGreenStyle

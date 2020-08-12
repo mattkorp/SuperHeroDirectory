@@ -8,7 +8,13 @@
 
 import Foundation
 
-public struct Superhero: Decodable {
+protocol SuperheroProtocol {
+    var name: String? { get }
+    var description: String? { get }
+    var thumbnail: Image { get }
+}
+
+public struct Superhero: Decodable, SuperheroProtocol {
     // The name of the character.
     public let name: String?
     // A short bio or description of the character.

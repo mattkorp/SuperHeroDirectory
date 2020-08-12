@@ -12,7 +12,7 @@ import Foundation
 
 protocol MarvelRepositoryProtocol {
     /// fetch heroes from endpoint
-    func get(named: String?, offset: Int, limit: Int) -> Promise<RawSuperheroData>
+    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroProtocol]>
 }
 
 // MARK: - MarvelRepository
@@ -59,8 +59,12 @@ final class MarvelRepository {
 
 extension MarvelRepository: MarvelRepositoryProtocol {
 
-    func get(named: String?, offset: Int, limit: Int) -> Promise<RawSuperheroData> {
+    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroProtocol]> {
         let task = MarvelTask(named: named, offset: offset, limit: limit)
-        return task.request.responseObject()
+        return Promise<[SuperheroProtocol]> { ful, rej in
+            (task.request.responseObject() as Promise<RawSuperheroData>)
+                .onSuccess { h in ful(h.data?.results ?? []) }
+                .onFailure(rej)
+        }
     }
 }

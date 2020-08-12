@@ -17,12 +17,9 @@ struct SearchListWireframe {
     func build(router: SearchListRouter) -> SearchListViewController {
 
         let viewController = SearchListViewController()
-        let interactor = SearchListInteractor(getSuperheroUseCase: container.getSuperheroUseCase)
-        let presenter = SearchListPresenter()
+        let presenter = SearchListPresenter(getSuperheroUseCase: container.getSuperheroUseCase)
 
-        interactor.presenter = presenter
         viewController.presenter = presenter
-        presenter.interactor = interactor
         presenter.router = router
         presenter.view = viewController
 

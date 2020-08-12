@@ -20,15 +20,11 @@ protocol DetailsViewPresentable {
 
 struct DetailsViewModel: DetailsViewPresentable {
 
-    var superhero: Superhero
+    var superhero: SuperheroProtocol
     
-    var name: String {
-        return superhero.name?.uppercased() ?? ""
-    }
+    var name: String { superhero.name?.uppercased() ?? "" }
     
-    var nameLabel: String {
-        return L10n.Detail.Bio.title
-    }
+    var nameLabel: String { L10n.Detail.Bio.title }
     
     var bio: String {
         guard let description = superhero.description, !description.isEmpty else {
@@ -47,7 +43,5 @@ struct DetailsViewModel: DetailsViewPresentable {
         return path + "." + format
     }
     
-    var noImageName: String {
-        return "image_not_available"
-    }
+    var noImageName: String { "image_not_available" }
 }

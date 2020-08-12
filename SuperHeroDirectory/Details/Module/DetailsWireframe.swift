@@ -12,16 +12,13 @@ import Foundation
 
 struct DetailsWireframe {
 
-    let superhero: Superhero
+    let superhero: SuperheroProtocol
 
     func build(router: DetailsRouterProtocol) -> DetailsViewController {
         let viewController = DetailsViewController()
-        let interactor = DetailsInteractor(superhero: superhero)
-        let presenter = DetailsPresenter()
+        let presenter = DetailsPresenter(superhero: superhero)
 
-        interactor.presenter = presenter
         viewController.presenter = presenter
-        presenter.interactor = interactor
         presenter.router = router
         presenter.view = viewController
 

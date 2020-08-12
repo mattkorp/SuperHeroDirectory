@@ -11,10 +11,8 @@ import UIKit
 // MARK: - DetailsPresenterProtocol - Declaration
 
 protocol DetailsPresenterProtocol {
-    /// The presenter fetches data from Interactor
+    /// The presenter creates viewmodel from injected entity and serves to view
     func fetch()
-    /// The Interactor informs Presenter fetch was successful
-    func interactor(didFetch superhero: Superhero)
 }
 
 // MARK: - DetailsPresenter Module Presenter
@@ -23,7 +21,12 @@ final class DetailsPresenter {
 
     weak var router: DetailsRouterProtocol?
     weak var view: DetailsViewControllerProtocol?
-    var interactor: DetailsInteractorProtocol?
+
+    private let superhero: SuperheroProtocol
+
+    init(superhero: SuperheroProtocol) {
+        self.superhero = superhero
+    }
 }
 
 // MARK: - DetailsPresenterProtocol - implementation
@@ -32,10 +35,6 @@ extension DetailsPresenter: DetailsPresenterProtocol {
 
     func fetch() {
         view?.startLoading()
-        interactor?.fetch()
-    }
-
-    func interactor(didFetch superhero: Superhero) {
         let presentable = DetailsViewModel(superhero: superhero)
         view?.consume(presentable: presentable)
         view?.stopLoading()

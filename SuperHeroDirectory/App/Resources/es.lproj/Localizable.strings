@@ -10,6 +10,7 @@
 "general.error.text" = "Algo salió mal.";
 "general.alert.ok.title" = "OK";
 "searchList.navigation.title" = "Directorio de Superhéroes";
-"detail.bio.title" = "BIO:";
+"searchList.searchbar.placeholder.text" = "BUSCAR";
+"detail.bio.title" = "BIOGRAFÍA";
 "detail.bio.text" = "Descripción no disponible..";
 

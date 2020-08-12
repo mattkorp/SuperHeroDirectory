@@ -28,6 +28,11 @@ enum L10n {
             /// "Superhero Directory"
             static var title: String { L10n.tr("Localizable", "searchList.navigation.title") }
         }
+        enum Searchbar {
+            enum Placeholder {
+                static var text: String { L10n.tr("Localizable", "searchList.searchbar.placeholder.text")}
+            }
+        }
     }
     enum Detail {
         enum Bio {

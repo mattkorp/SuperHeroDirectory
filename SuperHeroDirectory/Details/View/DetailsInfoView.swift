@@ -28,8 +28,10 @@ final class DetailsInfoView: UIView {
 private extension DetailsInfoView {
 
     func setupUI() {
-        nameLabel |> greenStyle
-        bioLabel |> greenStyle
+        self |> lightGreyBackgroundStyle
+        bioTextView |> lightGreyBackgroundStyle
+        nameLabel |> largeDarkMultilineStyle
+        bioLabel |> largeDarkMultilineStyle
     }
 
     func updateUI() {

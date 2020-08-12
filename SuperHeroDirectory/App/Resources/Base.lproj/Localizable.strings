@@ -10,5 +10,6 @@
 "general.error.text" = "Something went wrong.";
 "general.alert.ok.title" = "OK";
 "searchList.navigation.title" = "Superhero Directory";
-"detail.bio.title" = "BIO:";
+"searchList.searchbar.placeholder.text" = "SEARCH";
+"detail.bio.title" = "BIOGRAPHY";
 "detail.bio.text" = "Description unavailable..";

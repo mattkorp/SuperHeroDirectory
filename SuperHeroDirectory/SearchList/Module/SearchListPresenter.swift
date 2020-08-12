@@ -11,18 +11,14 @@ import UIKit
 // MARK: - SearchListPresenterProtocol - Declaration
 
 protocol SearchListPresenterProtocol {
-    /// The presenter fetches data from Interactor
+    /// The presenter fetches data from use case
     func fetch()
-    /// The presenter fetches names from Interactor with search parameter
+    /// The presenter fetches names from use case with search parameter
     func fetch(startsWith: String)
     /// Presenter fetches more of the current string
     func fetchMore(startsWith: String)
-    /// The presenter reload data from the interactor
+    /// The presenter reload data from the use case
     func refresh()
-    /// The Interactor informs Presenter fetch was successful
-    func interactor(didFetch data: ([Superhero]))
-    /// The Interactor informs Presenter fetch failed
-    func interactor(didFailWith error: Error)
     /// View did Select group
     func view(didSelect presentable: SearchListViewPresentable)
 }
@@ -33,7 +29,12 @@ final class SearchListPresenter {
 
     weak var router: SearchListRouterProtocol?
     weak var view: SearchListViewControllerProtocol?
-    var interactor: SearchListInteractorProtocol?
+    
+    private var getSuperheroUseCase: GetSuperheroUseCaseProtocol
+
+    init(getSuperheroUseCase: GetSuperheroUseCaseProtocol) {
+        self.getSuperheroUseCase = getSuperheroUseCase
+    }
 }
 
 // MARK: - SearchListPresenterProtocol - implementation
@@ -42,35 +43,37 @@ extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
         view?.startLoading()
-        interactor?.fetch()
+        getSuperheroUseCase.fetch()
+            .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetch(startsWith: String) {
-        guard startsWith.count > 1 else {
-            return
-        }
-        interactor?.fetch(startsWith: startsWith)
+        let minSearchLength = 3
+        guard startsWith.count >= minSearchLength else { return }
+        getSuperheroUseCase.fetch(startsWith: startsWith)
+            .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetchMore(startsWith: String) {
-        interactor?.fetchMore(startsWith: startsWith)
+        getSuperheroUseCase.fetchMore(startsWith: startsWith)
+            .onSuccess(handleSuccess).onFailure(handleError)
     }
 
     func refresh() {
-        interactor?.refresh()
+        getSuperheroUseCase.refresh()
+            .onSuccess(handleSuccess).onFailure(handleError)
     }
 
-    func interactor(didFetch data: ([Superhero])) {
-        let presentables = data.map { superhero in
-            SearchListViewModel(superhero: superhero)
-        }
+    func handleSuccess(_ heroes: ([SuperheroProtocol])) {
+        let presentables = heroes.map { SearchListViewModel(superhero: $0) }
         view?.consume(presentables: presentables)
         view?.stopLoading()
     }
 
-    func interactor(didFailWith error: Error) {
+    func handleError(_ error: Error) {
         view?.stopLoading()
-        let errorMessage = (error as? HTTPError).flatMap { $0.localizedDescription } ?? L10n.General.Error.text
+        let errorMessage = (error as? HTTPError)
+            .flatMap { $0.localizedDescription } ?? L10n.General.Error.text
         view?.show(title: L10n.General.Error.title, message: errorMessage)
     }
 

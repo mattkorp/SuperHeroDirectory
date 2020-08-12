@@ -83,8 +83,10 @@ final class SearchListView: UIView {
     }
     
     func scrollToTop() {
-        let topOffest = CGPoint(x: 0, y: -tableView.contentInset.top)
-        tableView.setContentOffset(topOffest, animated: true)
+        DispatchQueue.main.async {
+            let topOffest = CGPoint(x: 0, y: -self.tableView.contentInset.top)
+            self.tableView.setContentOffset(topOffest, animated: true)
+        }
     }
 }
 
@@ -95,7 +97,7 @@ private extension SearchListView {
     func setupUI() {
         addSubview(searchBar)
         searchBar.delegate = self
-        searchBar.placeholder = "SEARCH"
+        searchBar.placeholder = L10n.SearchList.Searchbar.Placeholder.text
         searchBar.showsCancelButton = true
         hideKeyboardWhenTappedAround()
         
@@ -166,8 +168,8 @@ extension SearchListView: UITableViewDelegate {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        // Change 5.0 to adjust the distance from bottom
-        if maximumOffset - currentOffset <= 5.0 {
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
             searchBar.text.flatMap {
                 $0.isEmpty ? delegate?.fetch() : delegate?.fetchMore(searchText: $0)
             }

@@ -60,10 +60,7 @@ extension SearchListViewController: SearchListViewControllerProtocol {
         isLoadingMore = false
         
         self.presentables = self.presentables.flatMap { $0 + presentables } ?? presentables
-
-        DispatchQueue.main.async {
-            self.searchListView.reloadData()
-        }
+        searchListView.reloadData()
     }
 
     func show(title: String, message: String) {
@@ -81,14 +78,13 @@ extension SearchListViewController: SearchListViewUIDelegate {
     }
     
     func fetchMore(searchText: String) {
-        presenter.fetch(startsWith: searchText)
+        presenter.fetchMore(startsWith: searchText)
     }
     
     func fetch() {
-        if !isLoadingMore {
-            isLoadingMore = true
-            presenter.fetch()
-        }
+        guard !isLoadingMore else { return }
+        isLoadingMore = true
+        presenter.fetch()
     }
 
     func refresh() {
@@ -111,7 +107,7 @@ extension SearchListViewController: SearchListViewDataSource {
 }
 
 extension SearchListViewController {
-    
+    /// Set gesture recognizer to scroll to top of list if nav bar is tapped
     func tapLabelToScrollToTheTop() {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         label.text = navigationItem.title

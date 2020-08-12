@@ -10,5 +10,6 @@
 "general.error.text" = "Alguna cosa ha anat malament.";
 "general.alert.ok.title" = "OK";
 "searchList.navigation.title" = "Directori de superherois";
-"detail.bio.title" = "BIO:";
+"searchList.searchbar.placeholder.text" = "CERCA";
+"detail.bio.title" = "BIOGRAFIA";
 "detail.bio.text" = "Descripció no disponible..";
