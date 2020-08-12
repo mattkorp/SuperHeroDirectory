@@ -19,6 +19,7 @@ class DetailsViewControllerUITestsSpec: QuickSpec {
                     let router = DetailsRouter(superhero: superhero)
                     let sut = router.viewController
                     assertSnapshot(matching: sut, as: .image)
+                    assertSnapshot(matching: sut, as: .recursiveDescription)
                 }
             }
         }

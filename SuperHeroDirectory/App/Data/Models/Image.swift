@@ -15,6 +15,8 @@ public struct Image {
     public let format: String?
 }
 
+// MARK: - Decodable
+
 extension Image: Decodable {
     
     private enum CodingKeys: String, CodingKey {

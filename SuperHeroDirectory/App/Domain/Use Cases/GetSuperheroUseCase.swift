@@ -10,20 +10,19 @@ import Foundation
 
 protocol GetSuperheroUseCaseProtocol {
     /// Fetch characters from marvel repository with pagination
-    mutating func fetch() -> Promise<[SuperheroProtocol]>
+    mutating func fetch() -> Promise<[SuperheroType]>
     /// Fetch characters from marvel repository with search parameter
-    mutating func fetch(startsWith: String) -> Promise<[SuperheroProtocol]>
+    mutating func fetch(startsWith: String) -> Promise<[SuperheroType]>
     /// Fetch characters from marvel repository with pagination
-    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroProtocol]>
+    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroType]>
     /// Fetch characters from marvel repository
-    mutating func refresh() -> Promise<[SuperheroProtocol]>
+    mutating func refresh() -> Promise<[SuperheroType]>
 }
 
 struct GetSuperheroUseCase {
-    
+
     private let marvelRepository: MarvelRepositoryProtocol
     private var offset: Int = 0
-    private let limit: Int = 50
 
     init(marvelRepository: MarvelRepositoryProtocol) {
         self.marvelRepository = marvelRepository
@@ -32,30 +31,34 @@ struct GetSuperheroUseCase {
 
 extension GetSuperheroUseCase: GetSuperheroUseCaseProtocol {
     
-    mutating func fetch() -> Promise<[SuperheroProtocol]> {
-        setPaginationOffset(offset + limit)
-        return marvelRepository.get(named: nil, offset: offset, limit: limit)
+    mutating func fetch() -> Promise<[SuperheroType]> {
+        setPaginationOffset(offset + Constants.limit)
+        return marvelRepository.get(named: nil, offset: offset, limit: Constants.limit)
     }
     
-    mutating func fetch(startsWith: String) -> Promise<[SuperheroProtocol]> {
+    mutating func fetch(startsWith: String) -> Promise<[SuperheroType]> {
         setPaginationOffset(0)
-        return marvelRepository.get(named: startsWith, offset: offset, limit: limit)
+        return marvelRepository.get(named: startsWith, offset: offset, limit: Constants.limit)
     }
     
-    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroProtocol]> {
-        setPaginationOffset(offset + limit)
-        return marvelRepository.get(named: startsWith, offset: offset, limit: limit)
+    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroType]> {
+        setPaginationOffset(offset + Constants.limit)
+        return marvelRepository.get(named: startsWith, offset: offset, limit: Constants.limit)
     }
     
-    mutating func refresh() -> Promise<[SuperheroProtocol]> {
+    mutating func refresh() -> Promise<[SuperheroType]> {
         setPaginationOffset(0)
-        return marvelRepository.get(named: nil, offset: offset, limit: limit)
+        return marvelRepository.get(named: nil, offset: offset, limit: Constants.limit)
     }
 }
 
-// MARK: - Private methods
+// MARK: - Private
 
 extension GetSuperheroUseCase {
+    
+    private enum Constants {
+        static let limit: Int = 50
+    }
     
     mutating func setPaginationOffset(_ offset: Int) {
         self.offset = offset

@@ -8,7 +8,8 @@
 
 import Foundation
 
-public struct SuperheroDataContainer: Decodable {
+public struct SuperheroDataContainer {
+    
     // The requested offset (number of skipped results) of the call.
     public let offset: Int?
     // The requested result limit.
@@ -19,6 +20,11 @@ public struct SuperheroDataContainer: Decodable {
     public let count: Int?
     // The list of characters returned by the call.
     public let results: [Superhero]
+}
+
+// MARK: - Decodable
+
+extension SuperheroDataContainer: Decodable {
     
     private enum CodingKeys: CodingKey {
         case offset

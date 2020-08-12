@@ -20,7 +20,7 @@ protocol DetailsViewPresentable {
 
 struct DetailsViewModel: DetailsViewPresentable {
 
-    var superhero: SuperheroProtocol
+    let superhero: SuperheroType
     
     var name: String { superhero.name?.uppercased() ?? "" }
     

@@ -22,6 +22,7 @@ class SearchListViewControllerUITestsSpec: QuickSpec {
                     let sut = searchListRouter.viewController
                     
                     assertSnapshot(matching: sut, as: .image)
+                    assertSnapshot(matching: sut, as: .recursiveDescription)
                 }
             }
         }

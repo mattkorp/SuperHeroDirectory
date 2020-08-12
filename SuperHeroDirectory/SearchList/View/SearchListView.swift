@@ -173,7 +173,6 @@ extension SearchListView: UITableViewDelegate {
             searchBar.text.flatMap {
                 $0.isEmpty ? delegate?.fetch() : delegate?.fetchMore(searchText: $0)
             }
-
         }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  DetailsInfoView.swift
-//  DragonDrive
+//  SuperHeroDirectory
 //
 //  Created by Matthew Korporaal on 20.10.19.
 //  Copyright © 2019 Korporaal. All rights reserved.

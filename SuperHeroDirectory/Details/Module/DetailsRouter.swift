@@ -25,7 +25,7 @@ final class DetailsRouter {
     private let builder: DetailsWireframe
     private weak var _viewController: DetailsViewController?
 
-    init(superhero: SuperheroProtocol) {
+    init(superhero: SuperheroType) {
         builder = DetailsWireframe(superhero: superhero)
     }
 }

@@ -8,13 +8,19 @@
 
 import Foundation
 
-struct RawSuperheroData: Decodable {
+struct RawSuperheroData {
+    
     var data: SuperheroDataContainer?
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         data = try container.decode(SuperheroDataContainer?.self, forKey: .data)
     }
+}
+
+// MARK: - Decodable
+
+extension RawSuperheroData: Decodable {
     
     private enum CodingKeys: CodingKey {
         case data

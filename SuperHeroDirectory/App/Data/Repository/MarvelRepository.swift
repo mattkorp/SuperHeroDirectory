@@ -12,7 +12,7 @@ import Foundation
 
 protocol MarvelRepositoryProtocol {
     /// fetch heroes from endpoint
-    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroProtocol]>
+    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroType]>
 }
 
 // MARK: - MarvelRepository
@@ -21,24 +21,18 @@ final class MarvelRepository {
 
     private struct MarvelTask: Task {
         
-        var baseURL: URL = URL(string: "https://gateway.marvel.com:443/v1/public/characters")!
+        var baseURL: URL = URL(string: URLPath.characters)!
         
         var parameters: Parameters? {
-            if let named = named {
-                return [
-                        "limit": limit,
-                        "offset": offset,
-                        "nameStartsWith": named,
-                        "ts": APIKeys.dateHash.0,
-                        "apikey": APIKeys.marvelPublic,
-                        "hash": APIKeys.dateHash.1]
-            }
-            return [
-                    "limit": limit,
-                    "offset": offset,
-                    "ts": APIKeys.dateHash.0,
-                    "apikey": APIKeys.marvelPublic,
-                    "hash": APIKeys.dateHash.1]
+            var params: Parameters = [
+                Keys.limit: limit,
+                Keys.offset: offset,
+                Keys.timestamp: APIKeys.dateHash.0,
+                Keys.key: APIKeys.marvelPublic,
+                Keys.hash: APIKeys.dateHash.1]
+            named.flatMap { params[Keys.named] = $0 }
+            
+            return params
         }
         
         // MARK: - Private
@@ -59,12 +53,30 @@ final class MarvelRepository {
 
 extension MarvelRepository: MarvelRepositoryProtocol {
 
-    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroProtocol]> {
+    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroType]> {
         let task = MarvelTask(named: named, offset: offset, limit: limit)
-        return Promise<[SuperheroProtocol]> { ful, rej in
+        return Promise<[SuperheroType]> { fulfill, reject in
             (task.request.responseObject() as Promise<RawSuperheroData>)
-                .onSuccess { h in ful(h.data?.results ?? []) }
-                .onFailure(rej)
+                .onSuccess { fulfill($0.data?.results ?? []) }
+                .onFailure(reject)
         }
+    }
+}
+
+// MARK: - Parameter keys & path
+
+private extension MarvelRepository {
+    
+    enum Keys {
+        static let limit = "limit"
+        static let offset = "offset"
+        static let timestamp = "ts"
+        static let key = "apikey"
+        static let hash = "hash"
+        static let named = "nameStartsWith"
+    }
+    
+    enum URLPath {
+        static let characters = "https://gateway.marvel.com:443/v1/public/characters"
     }
 }

@@ -63,11 +63,23 @@ extension SearchListPresenter: SearchListPresenterProtocol {
         getSuperheroUseCase.refresh()
             .onSuccess(handleSuccess).onFailure(handleError)
     }
+    
+    func view(didSelect presentable: SearchListViewPresentable) {
+        router?.showDetails(with: presentable.superhero)
+    }
+}
 
-    func handleSuccess(_ heroes: ([SuperheroProtocol])) {
+// MARK: - Private methods
+
+private extension SearchListPresenter {
+
+    func handleSuccess(_ heroes: ([SuperheroType])) {
+        view?.stopLoading()
+
+        guard heroes.count > 0 else { return }
+        
         let presentables = heroes.map { SearchListViewModel(superhero: $0) }
         view?.consume(presentables: presentables)
-        view?.stopLoading()
     }
 
     func handleError(_ error: Error) {
@@ -75,9 +87,5 @@ extension SearchListPresenter: SearchListPresenterProtocol {
         let errorMessage = (error as? HTTPError)
             .flatMap { $0.localizedDescription } ?? L10n.General.Error.text
         view?.show(title: L10n.General.Error.title, message: errorMessage)
-    }
-
-    func view(didSelect presentable: SearchListViewPresentable) {
-        router?.showDetails(with: presentable.superhero)
     }
 }

@@ -12,7 +12,7 @@ import Foundation
 
 struct DetailsWireframe {
 
-    let superhero: SuperheroProtocol
+    let superhero: SuperheroType
 
     func build(router: DetailsRouterProtocol) -> DetailsViewController {
         let viewController = DetailsViewController()

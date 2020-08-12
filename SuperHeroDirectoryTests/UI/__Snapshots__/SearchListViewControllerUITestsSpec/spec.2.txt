@@ -1,0 +1,18 @@
+<SuperHeroDirectory.SearchListView; frame = (0 0; 0 0); autoresize = W+H; layer = <CALayer>>
+   | <UISearchBar; frame = (0 44; 0 50); text = ''; gestureRecognizers = <NSArray>; layer = <CALayer>>
+   |    | <UIView; frame = (0 0; 0 50); clipsToBounds = YES; autoresize = W+H; layer = <CALayer>>
+   |    |    | <UISearchBarBackground; frame = (0 0; 0 50); userInteractionEnabled = NO; layer = <CALayer>>
+   |    |    | <_UISearchBarSearchContainerView; frame = (0 0; 0 0); autoresize = W; gestureRecognizers = <NSArray>; layer = <CALayer>>
+   |    |    |    | <UISearchBarTextField; frame = (-56 2; 48 36); text = ''; opaque = NO; gestureRecognizers = <NSArray>; layer = <CALayer>>
+   |    |    |    |    | <_UISearchBarSearchFieldBackgroundView; frame = (0 0; 48 36); opaque = NO; autoresize = W+H; userInteractionEnabled = NO; layer = <CALayer>>
+   |    |    |    |    | <UIImageView; frame = (6 8.5; 20 18); opaque = NO; userInteractionEnabled = NO; tintColor = <UIDynamicSystemColor; name = secondaryLabelColor>; layer = <CALayer>>
+   |    |    |    |    | <UISearchBarTextFieldLabel; frame = (30 7; 4 20.5); text = 'SEARCH'; opaque = NO; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   |    |    |    |    | <_UITextFieldCanvasView; frame = (30 2; 3 32); opaque = NO; userInteractionEnabled = NO; layer = <_UITextTiledLayer>>
+   |    |    |    |    |    | <UITextSelectionView; frame = (0 0; 0 0); userInteractionEnabled = NO; layer = <CALayer>>
+   |    |    |    | <UINavigationButton; frame = (-45 -16; 53 30); opaque = NO; layer = <CALayer>>
+   |    |    |    |    | <UIButtonLabel; frame = (0 4.5; 53 21); text = 'Cancel'; opaque = NO; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   | <SuperHeroDirectory.TableView; baseClass = UITableView; frame = (0 0; 0 0); clipsToBounds = YES; gestureRecognizers = <NSArray>; layer = <CALayer>; contentOffset: {0, -44}; contentSize: {0, 0}; adjustedContentInset: {44, 0, 0, 0}; dataSource: <SuperHeroDirectory.SearchListView; frame = (0 0; 0 0); autoresize = W+H; layer = <CALayer>>>
+   |    | <_UIScrollViewScrollIndicator; frame = (-42 -50; 36 3); alpha = 0; autoresize = TM; layer = <CALayer>>
+   |    |    | <UIView; frame = (0 0; 36 3); layer = <CALayer>>
+   |    | <_UIScrollViewScrollIndicator; frame = (-6 -83; 3 36); alpha = 0; autoresize = LM; layer = <CALayer>>
+   |    |    | <UIView; frame = (0 0; 3 36); layer = <CALayer>>

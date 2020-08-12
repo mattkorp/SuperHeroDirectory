@@ -22,9 +22,9 @@ final class DetailsPresenter {
     weak var router: DetailsRouterProtocol?
     weak var view: DetailsViewControllerProtocol?
 
-    private let superhero: SuperheroProtocol
+    private let superhero: SuperheroType
 
-    init(superhero: SuperheroProtocol) {
+    init(superhero: SuperheroType) {
         self.superhero = superhero
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol SearchListViewPresentable {
-    var superhero: SuperheroProtocol { get set }
+    var superhero: SuperheroType { get set }
     var name: String { get }
     var bio: String? { get }
 }
@@ -18,7 +18,7 @@ protocol SearchListViewPresentable {
 
 struct SearchListViewModel: SearchListViewPresentable {
 
-    var superhero: SuperheroProtocol
+    var superhero: SuperheroType
     
     var name: String {
         return superhero.name ?? ""

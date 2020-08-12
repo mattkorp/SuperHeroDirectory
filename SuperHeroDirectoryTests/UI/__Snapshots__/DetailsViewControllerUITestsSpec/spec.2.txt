@@ -1,0 +1,15 @@
+<UIView; frame = (0 0; 414 896); autoresize = W+H; layer = <CALayer>>
+   | <SuperHeroDirectory.DetailsInfoView; frame = (0 44; 414 852); autoresize = W+H; layer = <CALayer>>
+   |    | <UIImageView; frame = (50 30; 314 150); clipsToBounds = YES; autoresize = RM+BM; userInteractionEnabled = NO; layer = <CALayer>>
+   |    | <UILabel; frame = (50 188; 314 29); text = '<Name>'; opaque = NO; autoresize = RM+BM; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   |    | <UITextView; frame = (50 287; 314 545); text = ''; clipsToBounds = YES; autoresize = RM+BM; gestureRecognizers = <NSArray>; layer = <CALayer>; contentOffset: {0, 0}; contentSize: {314, 69}; adjustedContentInset: {0, 0, 0, 0}>
+   |    |    | <_UITextLayoutView; frame = (0 0; 0 0); layer = <CALayer>>
+   |    |    | <<_UITextContainerView; frame = (0 0; 314 30); layer = <CALayer>> minSize = {0, 0}, maxSize = {1.7976931348623157e+308, 1.7976931348623157e+308}, textContainer = <NSTextContainer size = (314.000000,inf); widthTracksTextView = YES; heightTracksTextView = NO>; exclusionPaths =; lineBreakMode = 0>
+   |    |    |    | <_UITextViewCanvasView; frame = (0 0; 314 30); userInteractionEnabled = NO; layer = <_UITextTiledLayer>>
+   |    |    |    | <UITextSelectionView; frame = (0 0; 0 0); userInteractionEnabled = NO; layer = <CALayer>>
+   |    |    | <_UIScrollViewScrollIndicator; frame = (3 539; 308 3); alpha = 0; autoresize = TM; layer = <CALayer>>
+   |    |    |    | <UIView; frame = (0 0; 308 3); layer = <CALayer>>
+   |    |    | <_UIScrollViewScrollIndicator; frame = (308 11; 3 63); alpha = 0; autoresize = LM; layer = <CALayer>>
+   |    |    |    | <UIView; frame = (0 0; 3 63); layer = <CALayer>>
+   |    | <UIView; frame = (30 233; 354 1); autoresize = RM+BM; layer = <CALayer>>
+   |    | <UILabel; frame = (50 250; 314 29); text = '<Bio>'; opaque = NO; autoresize = RM+BM; userInteractionEnabled = NO; layer = <_UILabelLayer>>

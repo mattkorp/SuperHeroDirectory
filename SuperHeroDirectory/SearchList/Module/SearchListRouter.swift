@@ -12,7 +12,7 @@ import UIKit
 
 protocol SearchListRouterProtocol: class {
     
-    func showDetails(with hero: SuperheroProtocol)
+    func showDetails(with hero: SuperheroType)
 }
 
 // MARK: SearchListRouter Module Router
@@ -37,7 +37,7 @@ final class SearchListRouter {
 
 extension SearchListRouter: SearchListRouterProtocol {
 
-    func showDetails(with hero: SuperheroProtocol) {
+    func showDetails(with hero: SuperheroType) {
         let detailsRouter = DetailsRouter(superhero: hero)
         viewController.navigationController?.pushViewController(detailsRouter.viewController, animated: true)
     }
