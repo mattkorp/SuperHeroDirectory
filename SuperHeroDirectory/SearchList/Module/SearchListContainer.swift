@@ -13,4 +13,5 @@ import Foundation
 protocol SearchListContainer {
     /// UseCase for all side effects needed for the grouped list SearchList module
     var getSuperheroUseCase: GetSuperheroUseCaseProtocol { get }
+    var paginationUseCase: PaginationUseCaseProtocol { get }
 }

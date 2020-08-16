@@ -11,22 +11,22 @@ import Foundation
 
 struct GetSuperheroUseCaseStub: GetSuperheroUseCaseProtocol {
     /// Fetch characters from marvel repository with pagination
-    mutating func fetch() -> Promise<[SuperheroType]> {
+    func fetch(with pageInfo: PageInfo) -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
         return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository with search parameter
-    mutating func fetch(startsWith: String) -> Promise<[SuperheroType]> {
+    func fetch(startsWith: String, pageInfo: PageInfo) -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
         return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository with pagination
-    mutating func fetchMore(startsWith: String) -> Promise<[SuperheroType]> {
+    func fetchMore(startsWith: String, pageInfo: PageInfo) -> Promise<[SuperheroType]> {
         let superhero = SuperheroMock()
         return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }
     /// Fetch characters from marvel repository
-    mutating func refresh() -> Promise<[SuperheroType]>{
+    func refresh(with pageInfo: PageInfo) -> Promise<[SuperheroType]>{
         let superhero = SuperheroMock()
         return Promise<[SuperheroType]> { fulfill, reject in fulfill([superhero]) }
     }

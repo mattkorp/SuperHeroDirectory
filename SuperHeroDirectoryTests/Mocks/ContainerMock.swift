@@ -12,8 +12,10 @@ import Foundation
 class ContainerMock: AppContainer {
     
     var getSuperheroUseCase: GetSuperheroUseCaseProtocol
+    var paginationUseCase: PaginationUseCaseProtocol
     
     init() {
         getSuperheroUseCase = GetSuperheroUseCaseStub()
+        paginationUseCase = PaginationUseCase()
     }
 }

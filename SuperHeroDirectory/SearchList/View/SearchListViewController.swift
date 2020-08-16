@@ -101,9 +101,7 @@ extension SearchListViewController: SearchListViewUIDelegate {
 
 extension SearchListViewController: SearchListViewDataSource {
     // Pass data to data source
-    func object() -> [SearchListViewPresentable]? {
-        presentables
-    }
+    func object() -> [SearchListViewPresentable]? { presentables }
 }
 
 extension SearchListViewController {

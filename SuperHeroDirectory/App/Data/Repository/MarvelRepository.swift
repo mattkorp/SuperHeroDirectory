@@ -12,7 +12,7 @@ import Foundation
 
 protocol MarvelRepositoryProtocol {
     /// fetch heroes from endpoint
-    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroType]>
+    func get(named: String?, pageInfo: PageInfo) -> Promise<[SuperheroType]>
 }
 
 // MARK: - MarvelRepository
@@ -25,8 +25,8 @@ final class MarvelRepository {
         
         var parameters: Parameters? {
             var params: Parameters = [
-                Keys.limit: limit,
-                Keys.offset: offset,
+                Keys.limit: pageInfo.limit,
+                Keys.offset: pageInfo.offset,
                 Keys.timestamp: APIKeys.dateHash.0,
                 Keys.key: APIKeys.marvelPublic,
                 Keys.hash: APIKeys.dateHash.1]
@@ -38,13 +38,11 @@ final class MarvelRepository {
         // MARK: - Private
         
         let named: String?
-        let offset: Int
-        let limit: Int
+        let pageInfo: PageInfo
         
-        init(named: String?, offset: Int, limit: Int) {
+        init(named: String?, pageInfo: PageInfo) {
             self.named = named
-            self.offset = offset
-            self.limit = limit
+            self.pageInfo = pageInfo
         }
     }
 }
@@ -53,8 +51,8 @@ final class MarvelRepository {
 
 extension MarvelRepository: MarvelRepositoryProtocol {
 
-    func get(named: String?, offset: Int, limit: Int) -> Promise<[SuperheroType]> {
-        let task = MarvelTask(named: named, offset: offset, limit: limit)
+    func get(named: String?, pageInfo: PageInfo) -> Promise<[SuperheroType]> {
+        let task = MarvelTask(named: named, pageInfo: pageInfo)
         return Promise<[SuperheroType]> { fulfill, reject in
             (task.request.responseObject() as Promise<RawSuperheroData>)
                 .onSuccess { fulfill($0.data?.results ?? []) }

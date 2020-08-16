@@ -26,14 +26,27 @@ protocol SearchListPresenterProtocol {
 // MARK: - SearchListPresenter Module Presenter
 
 final class SearchListPresenter {
+    
+    private struct State {
+        
+        var paginationUseCase: PaginationUseCaseProtocol
 
+        var pageInfo: PageInfo { paginationUseCase.getPageInfo() }
+        mutating func resetOffset() { paginationUseCase.resetOffset() }
+        mutating func setOffset() { paginationUseCase.setOffset() }
+    }
+    
     weak var router: SearchListRouterProtocol?
     weak var view: SearchListViewControllerProtocol?
     
-    private var getSuperheroUseCase: GetSuperheroUseCaseProtocol
-
-    init(getSuperheroUseCase: GetSuperheroUseCaseProtocol) {
+    private let getSuperheroUseCase: GetSuperheroUseCaseProtocol
+    
+    private var state: State
+    
+    init(getSuperheroUseCase: GetSuperheroUseCaseProtocol,
+         paginationUseCase: PaginationUseCaseProtocol) {
         self.getSuperheroUseCase = getSuperheroUseCase
+        self.state = State(paginationUseCase: paginationUseCase)
     }
 }
 
@@ -42,25 +55,28 @@ final class SearchListPresenter {
 extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
+        state.setOffset()
         view?.startLoading()
-        getSuperheroUseCase.fetch()
+        getSuperheroUseCase.fetch(with: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetch(startsWith: String) {
-        let minSearchLength = 3
-        guard startsWith.count >= minSearchLength else { return }
-        getSuperheroUseCase.fetch(startsWith: startsWith)
+        guard startsWith.count >= Constants.minSearchLength else { return }
+        state.resetOffset()
+        getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetchMore(startsWith: String) {
-        getSuperheroUseCase.fetchMore(startsWith: startsWith)
+        state.setOffset()
+        getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
 
     func refresh() {
-        getSuperheroUseCase.refresh()
+        state.resetOffset()
+        getSuperheroUseCase.refresh(with: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
     
@@ -75,7 +91,6 @@ private extension SearchListPresenter {
 
     func handleSuccess(_ heroes: ([SuperheroType])) {
         view?.stopLoading()
-
         guard heroes.count > 0 else { return }
         
         let presentables = heroes.map { SearchListViewModel(superhero: $0) }
@@ -87,5 +102,9 @@ private extension SearchListPresenter {
         let errorMessage = (error as? HTTPError)
             .flatMap { $0.localizedDescription } ?? L10n.General.Error.text
         view?.show(title: L10n.General.Error.title, message: errorMessage)
+    }
+    
+    enum Constants {
+        static let minSearchLength = 3
     }
 }

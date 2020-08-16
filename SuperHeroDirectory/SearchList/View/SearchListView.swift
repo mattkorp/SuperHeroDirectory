@@ -139,7 +139,6 @@ extension SearchListView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-
         configure(cell, title: presentables?[indexPath.row].name)
         
         return cell

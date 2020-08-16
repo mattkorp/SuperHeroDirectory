@@ -49,6 +49,7 @@
 		4676F3A324DF338500189E2F /* MarvelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A224DF338500189E2F /* MarvelRepository.swift */; };
 		4676F3A524DF367400189E2F /* RawSuperheroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A424DF367400189E2F /* RawSuperheroData.swift */; };
 		4676F3A724E054E200189E2F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A624E054E200189E2F /* String+Extensions.swift */; };
+		4698577124E92D0900B3FCA9 /* PaginationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4698577024E92D0900B3FCA9 /* PaginationUseCase.swift */; };
 		46B4618F24E18AAC00A20AAB /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618724E18AAC00A20AAB /* DetailsPresenter.swift */; };
 		46B4619024E18AAC00A20AAB /* DetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618824E18AAC00A20AAB /* DetailsRouter.swift */; };
 		46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618924E18AAC00A20AAB /* DetailsWireframe.swift */; };
@@ -124,6 +125,7 @@
 		4676F3A424DF367400189E2F /* RawSuperheroData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawSuperheroData.swift; sourceTree = "<group>"; };
 		4676F3A624E054E200189E2F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		4676F3A824E055E400189E2F /* SuperHeroDirectory-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SuperHeroDirectory-Bridging-Header.h"; sourceTree = "<group>"; };
+		4698577024E92D0900B3FCA9 /* PaginationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationUseCase.swift; sourceTree = "<group>"; };
 		469B600224DDE81900D01913 /* SuperHeroDirectory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperHeroDirectory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469B601824DDE81B00D01913 /* SuperHeroDirectoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperHeroDirectoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		469B601E24DDE81B00D01913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				4676F39724DF1B2F00189E2F /* GetSuperheroUseCase.swift */,
+				4698577024E92D0900B3FCA9 /* PaginationUseCase.swift */,
 			);
 			path = "Use Cases";
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				4676F38A24DF0BCE00189E2F /* SearchListRouter.swift in Sources */,
 				4676F36C24DEF38800189E2F /* FunctionalComposition.swift in Sources */,
 				4676F39F24DF2BE600189E2F /* Superhero.swift in Sources */,
+				4698577124E92D0900B3FCA9 /* PaginationUseCase.swift in Sources */,
 				46BB297924E073E6005AB129 /* APIKeys.swift in Sources */,
 				4676F36524DEF38800189E2F /* Task.swift in Sources */,
 				4676F3A524DF367400189E2F /* RawSuperheroData.swift in Sources */,

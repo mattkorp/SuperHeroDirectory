@@ -20,7 +20,7 @@ class MarvelRepositorySpec: XCTestCase {
     func testGetFlights() {
         let numRequestedHeroes = 5
         let expectation = XCTestExpectation(description: "Expect data")
-        sut.get(named: nil, offset: 5, limit: numRequestedHeroes)
+        sut.get(named: nil, pageInfo: (offset: 5, limit: numRequestedHeroes))
             .onSuccess { XCTAssertNotNil($0) }
             .onSuccess { XCTAssert($0.count == numRequestedHeroes)}
             .onFailure { XCTFail(($0 as! HTTPError).localizedDescription) }

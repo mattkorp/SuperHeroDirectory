@@ -20,6 +20,7 @@ final class Container: AppContainer {
     // MARK: - Use Cases
 
     let getSuperheroUseCase: GetSuperheroUseCaseProtocol
+    let paginationUseCase: PaginationUseCaseProtocol
 
     init() {
 
@@ -30,5 +31,6 @@ final class Container: AppContainer {
         // MARK: - Use Cases
 
         getSuperheroUseCase = GetSuperheroUseCase(marvelRepository: marvelRepository)
+        paginationUseCase = PaginationUseCase()
     }
 }

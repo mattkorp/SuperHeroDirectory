@@ -20,11 +20,7 @@ struct SearchListViewModel: SearchListViewPresentable {
 
     var superhero: SuperheroType
     
-    var name: String {
-        return superhero.name ?? ""
-    }
+    var name: String { superhero.name ?? "" }
     
-    var bio: String? {
-        return superhero.description
-    }
+    var bio: String? { superhero.description }
 }
