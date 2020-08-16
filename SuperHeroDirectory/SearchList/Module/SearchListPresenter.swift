@@ -27,10 +27,14 @@ protocol SearchListPresenterProtocol {
 
 final class SearchListPresenter {
     
+    // MARK: - State
+    
     private struct State {
         
         var paginationUseCase: PaginationUseCaseProtocol
 
+        // MARK: - helpers
+        
         var pageInfo: PageInfo { paginationUseCase.getPageInfo() }
         mutating func resetOffset() { paginationUseCase.resetOffset() }
         mutating func setOffset() { paginationUseCase.setOffset() }
@@ -55,26 +59,29 @@ final class SearchListPresenter {
 extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
-        state.setOffset()
         view?.startLoading()
+        state.setOffset()
         getSuperheroUseCase.fetch(with: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetch(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
+        view?.startLoading()
         state.resetOffset()
         getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
     
     func fetchMore(startsWith: String) {
+        view?.startLoading()
         state.setOffset()
         getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
     }
 
     func refresh() {
+        view?.startLoading()
         state.resetOffset()
         getSuperheroUseCase.refresh(with: state.pageInfo)
             .onSuccess(handleSuccess).onFailure(handleError)
