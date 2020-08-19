@@ -7,7 +7,7 @@
 //
 
 protocol PaginationUseCaseProtocol {
-    func getPageInfo() -> PageInfo
+    var pageInfo: PageInfo { get }
     
     mutating func resetOffset()
     mutating func setOffset()
@@ -26,7 +26,7 @@ struct PaginationUseCase {
 
 extension PaginationUseCase: PaginationUseCaseProtocol {
     
-    func getPageInfo() -> PageInfo { (offset, Constants.limit) }
+    var pageInfo: PageInfo { (offset, Constants.limit) }
     
     mutating func resetOffset() { offset = 0 }
     mutating func setOffset() { offset = Constants.limit + offset }

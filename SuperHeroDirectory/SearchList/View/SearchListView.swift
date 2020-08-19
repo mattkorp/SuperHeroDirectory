@@ -145,9 +145,8 @@ extension SearchListView: UITableViewDataSource {
     }
     
     func configure(_ cell: UITableViewCell, title: String?) {
-        cell.accessoryType = .disclosureIndicator
+        cell |> searchListCellStyle
         cell.textLabel?.text = title
-        cell.textLabel.flatMap { $0 |> largeDarkMultilineStyle }
     }
 }
 

@@ -23,6 +23,11 @@ func lightGreyBackgroundStyle(_ view: UIView) {
     view.backgroundColor = ColorName.lightGrey.color
 }
 
+func searchListCellStyle(_ cell: UITableViewCell) {
+    cell.accessoryType = .disclosureIndicator
+    cell.textLabel.flatMap { $0 |> largeDarkMultilineStyle }
+}
+
 // Composed styles
 
 let tableViewStyle = clearTableViewStyle + superLightGreyBackgroundStyle

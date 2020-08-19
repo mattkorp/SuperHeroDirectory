@@ -26,7 +26,6 @@ final class SearchListViewController: BaseViewController {
 
     private let searchListView = SearchListView()
     private var presentables: [SearchListViewPresentable]?
-    private var isLoadingMore = false
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -57,8 +56,6 @@ final class SearchListViewController: BaseViewController {
 extension SearchListViewController: SearchListViewControllerProtocol {
 
     func consume(presentables: [SearchListViewPresentable]) {
-        isLoadingMore = false
-        
         self.presentables = self.presentables.flatMap { $0 + presentables } ?? presentables
         searchListView.reloadData()
     }
@@ -82,8 +79,6 @@ extension SearchListViewController: SearchListViewUIDelegate {
     }
     
     func fetch() {
-        guard !isLoadingMore else { return }
-        isLoadingMore = true
         presenter.fetch()
     }
 
