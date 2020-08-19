@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46667B5D24ED5AD300508C68 /* SearchListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46667B5C24ED5AD300508C68 /* SearchListState.swift */; };
 		4670740224E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */; };
 		4670740624E3EDC2006228DF /* DetailsInfoViewUITestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469B602724DDE81B00D01913 /* DetailsInfoViewUITestSpec.swift */; };
 		4670740924E40764006228DF /* DetailsViewControllerUITestsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670740824E40764006228DF /* DetailsViewControllerUITestsSpec.swift */; };
@@ -50,6 +51,7 @@
 		4676F3A524DF367400189E2F /* RawSuperheroData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A424DF367400189E2F /* RawSuperheroData.swift */; };
 		4676F3A724E054E200189E2F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676F3A624E054E200189E2F /* String+Extensions.swift */; };
 		4698577124E92D0900B3FCA9 /* PaginationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4698577024E92D0900B3FCA9 /* PaginationUseCase.swift */; };
+		4698577324ED340600B3FCA9 /* MarvelRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4698577224ED340600B3FCA9 /* MarvelRepositoryMock.swift */; };
 		46B4618F24E18AAC00A20AAB /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618724E18AAC00A20AAB /* DetailsPresenter.swift */; };
 		46B4619024E18AAC00A20AAB /* DetailsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618824E18AAC00A20AAB /* DetailsRouter.swift */; };
 		46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4618924E18AAC00A20AAB /* DetailsWireframe.swift */; };
@@ -81,6 +83,7 @@
 		0AB28C98BD10E1832FA187D1 /* Pods-SuperHeroDirectoryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHeroDirectoryTests.debug.xcconfig"; path = "Target Support Files/Pods-SuperHeroDirectoryTests/Pods-SuperHeroDirectoryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12F32304169722A3E9DB0B7E /* Pods_SuperHeroDirectory_SuperHeroDirectoryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperHeroDirectory_SuperHeroDirectoryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B21A6F2FDCA8E61316EDB71 /* Pods-SuperHeroDirectory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHeroDirectory.release.xcconfig"; path = "Target Support Files/Pods-SuperHeroDirectory/Pods-SuperHeroDirectory.release.xcconfig"; sourceTree = "<group>"; };
+		46667B5C24ED5AD300508C68 /* SearchListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListState.swift; sourceTree = "<group>"; };
 		4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoViewPresentableMock.swift; sourceTree = "<group>"; };
 		4670740824E40764006228DF /* DetailsViewControllerUITestsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewControllerUITestsSpec.swift; sourceTree = "<group>"; };
 		4670740A24E40797006228DF /* SuperheroMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperheroMock.swift; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 		4676F3A624E054E200189E2F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		4676F3A824E055E400189E2F /* SuperHeroDirectory-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SuperHeroDirectory-Bridging-Header.h"; sourceTree = "<group>"; };
 		4698577024E92D0900B3FCA9 /* PaginationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationUseCase.swift; sourceTree = "<group>"; };
+		4698577224ED340600B3FCA9 /* MarvelRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelRepositoryMock.swift; sourceTree = "<group>"; };
 		469B600224DDE81900D01913 /* SuperHeroDirectory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperHeroDirectory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469B601824DDE81B00D01913 /* SuperHeroDirectoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperHeroDirectoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		469B601E24DDE81B00D01913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -196,6 +200,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		46667B5B24ED5AC500508C68 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				46667B5C24ED5AD300508C68 /* SearchListState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
 		4670740024E3EA25006228DF /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +215,7 @@
 				4670740A24E40797006228DF /* SuperheroMock.swift */,
 				4670740E24E40C79006228DF /* GetSuperheroUseCaseStub.swift */,
 				4670741924E44EBA006228DF /* ContainerMock.swift */,
+				4698577224ED340600B3FCA9 /* MarvelRepositoryMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -339,6 +352,7 @@
 			children = (
 				46EA12E224E1CABC00B8058C /* Module */,
 				4676F38224DF0BCE00189E2F /* View */,
+				46667B5B24ED5AC500508C68 /* State */,
 			);
 			path = SearchList;
 			sourceTree = "<group>";
@@ -697,6 +711,7 @@
 				46EA12DD24E19A0000B8058C /* DetailsViewModel.swift in Sources */,
 				4676F37824DEF6D300189E2F /* AppContainer.swift in Sources */,
 				46B4618F24E18AAC00A20AAB /* DetailsPresenter.swift in Sources */,
+				46667B5D24ED5AD300508C68 /* SearchListState.swift in Sources */,
 				4676F37224DEF38800189E2F /* NibLoadable.swift in Sources */,
 				46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */,
 				4676F34124DEF13500189E2F /* AppDelegate.swift in Sources */,
@@ -744,6 +759,7 @@
 				4670741A24E44EBA006228DF /* ContainerMock.swift in Sources */,
 				4670740D24E40C23006228DF /* SearchListViewControllerUITestsSpec.swift in Sources */,
 				4670740924E40764006228DF /* DetailsViewControllerUITestsSpec.swift in Sources */,
+				4698577324ED340600B3FCA9 /* MarvelRepositoryMock.swift in Sources */,
 				4670740624E3EDC2006228DF /* DetailsInfoViewUITestSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

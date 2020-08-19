@@ -62,47 +62,49 @@ public struct Request: RequestType {
 public extension Request {
 
     func responseObject<T: Decodable>() -> Promise<T> {
-        Promise<T> { fulfill, reject in
-            self.response()
-                .onSuccess { data in
-                    do {
-                        let model = try JSONDecoder().decode(T.self, from: data)
-                        fulfill(model)
-                    } catch (let error) {
-                        reject(HTTPError.decodingError(underlying: error))
-                    }
+        let promise = Promise<T>()
+        self.response()
+            .onSuccess { data in
+                do {
+                    let model = try JSONDecoder().decode(T.self, from: data)
+                    promise.fulfill(model)
+                } catch (let error) {
+                    promise.reject(HTTPError.decodingError(underlying: error))
                 }
-                .onFailure(reject)
-        }
+            }
+            .onFailure(promise.reject)
+        
+        return promise
     }
 }
 
 // Request - private
 
-extension Request {
+private extension Request {
 
-    private func response() -> Promise<Data> {
-        Promise<Data> { fulfill, reject in
-            URLSession.shared.dataTask(with: self.asURLRequest()) { (data, response, error) in
-                if let error = error {
-                    reject(self.converted(error))
-                } else {
-                    let httpResponse = response as! HTTPURLResponse
-                    if (200 ... 299) ~= httpResponse.statusCode {
-                        guard let data = data else {
-                            reject(HTTPError.noData)
-                            return
-                        }
-                        fulfill(data)
-                    } else {
-                        reject(HTTPError.serverError(response: response))
+    func response() -> Promise<Data> {
+        let promise = Promise<Data>()
+        URLSession.shared.dataTask(with: self.asURLRequest()) { (data, response, error) in
+            if let error = error {
+                promise.reject(self.converted(error))
+            } else {
+                let httpResponse = response as! HTTPURLResponse
+                if (200 ... 299) ~= httpResponse.statusCode {
+                    guard let data = data else {
+                        promise.reject(HTTPError.noData)
+                        return
                     }
+                    promise.fulfill(data)
+                } else {
+                    promise.reject(HTTPError.serverError(response: response))
                 }
-            }.resume()
-        }
+            }
+        }.resume()
+        
+        return promise
     }
 
-    private func asURLRequest() -> URLRequest {
+    func asURLRequest() -> URLRequest {
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = headers
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -140,7 +142,7 @@ extension Request {
         return request
     }
 
-    private func converted(_ error: Error) -> Error {
+    func converted(_ error: Error) -> Error {
         if let error = error as? URLError {
             switch error.code {
             case .timedOut,
@@ -158,11 +160,15 @@ extension Request {
         return HTTPError.clientError(underlying: error)
     }
 
-    private func percentEscapeString(string: String) -> String {
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.insert(charactersIn: "-._* ")
-        return string
+    func percentEscapeString(string: String) -> String {
+        string
             .addingPercentEncoding(withAllowedCharacters: characterSet)!
             .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
+    }
+    
+    var characterSet: CharacterSet {
+        var characterSet = CharacterSet.alphanumerics
+        characterSet.insert(charactersIn: "-._* ")
+        return characterSet
     }
 }

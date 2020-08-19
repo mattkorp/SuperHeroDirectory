@@ -46,7 +46,7 @@ final class SearchListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = L10n.SearchList.Navigation.title
-        presenter.fetch()
+        presenter.refresh()
         tapLabelToScrollToTheTop()
     }
 }

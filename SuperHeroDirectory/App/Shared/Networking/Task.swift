@@ -13,7 +13,7 @@ import Foundation
 public protocol Task {
     
     // required
-    var baseURL: URL { get }
+    var baseURL: URL? { get }
 
     // optional
     var path: String? { get }
@@ -31,8 +31,16 @@ public extension Task {
     var method: HTTPMethod { .get }
 
     var request: Request {
-        let url = path.flatMap(baseURL.appendingPathComponent) ?? baseURL
-        
-        return Request(url: url, method: method, parameters: parameters, headers: headers)
+        Request(url: url, method: method, parameters: parameters, headers: headers)
+    }
+}
+
+private extension Task {
+    
+    var url: URL {
+        guard let baseURL = baseURL else {
+            fatalError("Incorrect base URL")
+        }
+        return path.flatMap(baseURL.appendingPathComponent) ?? baseURL
     }
 }

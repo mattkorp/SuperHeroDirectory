@@ -27,36 +27,19 @@ protocol SearchListPresenterProtocol {
 
 final class SearchListPresenter {
     
-    // MARK: - State
-    
-    private struct State {
-        
-        var paginationUseCase: PaginationUseCaseProtocol
-        var isLoading = false
-
-        // MARK: - helpers
-        
-        var pageInfo: PageInfo { paginationUseCase.pageInfo }
-        
-        mutating func resetOffset() { paginationUseCase.resetOffset() }
-        mutating func setOffset() { paginationUseCase.setOffset() }
-    }
-    
-    weak var router: SearchListRouterProtocol?
-    weak var view: SearchListViewControllerProtocol?
+    weak var router: SearchListRouterProtocol!
+    weak var view: SearchListViewControllerProtocol!
     
     private let getSuperheroUseCase: GetSuperheroUseCaseProtocol
     
-    private var state: State {
-        didSet {
-            state.isLoading ? view?.startLoading() : view?.stopLoading()
-        }
+    private var state: SearchListState {
+        didSet { updateView(with: state.viewState) }
     }
     
     init(getSuperheroUseCase: GetSuperheroUseCaseProtocol,
          paginationUseCase: PaginationUseCaseProtocol) {
         self.getSuperheroUseCase = getSuperheroUseCase
-        self.state = State(paginationUseCase: paginationUseCase)
+        self.state = SearchListState(paginationUseCase: paginationUseCase)
     }
 }
 
@@ -65,38 +48,31 @@ final class SearchListPresenter {
 extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
-        guard !state.isLoading else { return }
-        state.isLoading = true
-        state.setOffset()
-        getSuperheroUseCase.fetch(with: state.pageInfo)
-            .onSuccess(handleSuccess).onFailure(handleError)
+        guard state.viewState != .loading else { return }
+        state.pageState = .set
+        state.viewState = .result(getSuperheroUseCase.fetch(with: state.pageInfo))
     }
     
     func fetch(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
-        state.isLoading = true
-        state.resetOffset()
-        getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo)
-            .onSuccess(handleSuccess).onFailure(handleError)
+        state.pageState = .reset
+        state.viewState = .result(getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo))
     }
     
     func fetchMore(startsWith: String) {
-        guard !state.isLoading else { return }
-        state.isLoading = true
-        state.setOffset()
-        getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo)
-            .onSuccess(handleSuccess).onFailure(handleError)
+        guard startsWith.count >= Constants.minSearchLength else { return }
+        guard state.viewState != .loading else { return }
+        state.pageState = .set
+        state.viewState = .result(getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo))
     }
 
     func refresh() {
-        state.isLoading = true
-        state.resetOffset()
-        getSuperheroUseCase.refresh(with: state.pageInfo)
-            .onSuccess(handleSuccess).onFailure(handleError)
+        state.pageState = .reset
+        state.viewState = .result(getSuperheroUseCase.refresh(with: state.pageInfo))
     }
     
     func view(didSelect presentable: SearchListViewPresentable) {
-        router?.showDetails(with: presentable.superhero)
+        router.showDetails(with: presentable.superhero)
     }
 }
 
@@ -104,17 +80,32 @@ extension SearchListPresenter: SearchListPresenterProtocol {
 
 private extension SearchListPresenter {
 
+    func updateView(with viewState: SearchListState.ViewState) {
+        switch viewState {
+        case .loading:
+            view.startLoading()
+        case .result(let result):
+            result
+                .onSuccess(handleSuccess)
+                .onFailure(handleError)
+                .always(view.stopLoading)
+        }
+    }
+    
     func handleSuccess(_ heroes: [SuperheroType]) {
-        state.isLoading = false
-        let presentables = heroes.map { SearchListViewModel(superhero: $0) }
-        view?.consume(presentables: presentables)
+        view.consume(presentables: viewModels(with: heroes))
     }
 
     func handleError(_ error: Error) {
-        state.isLoading = false
-        let errorMessage = (error as? HTTPError)
-            .flatMap { $0.localizedDescription } ?? L10n.General.Error.text
-        view?.show(title: L10n.General.Error.title, message: errorMessage)
+        view.show(title: L10n.General.Error.title, message: errorMessage(from: error))
+    }
+    
+    func viewModels(with heroes: [SuperheroType]) -> [SearchListViewPresentable] {
+        heroes.map(SearchListViewModel.init)
+    }
+    
+    func errorMessage(from error: Error) -> String {
+        (error as? HTTPError).flatMap { $0.localizedDescription } ?? L10n.General.Error.text
     }
     
     enum Constants {
