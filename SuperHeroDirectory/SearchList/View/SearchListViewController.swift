@@ -1,5 +1,5 @@
 //
-//  SearchListView.swift
+//  SearchListViewController.swift
 //  SuperHeroDirectory
 //
 //  Created by Matthew Korporaal on 8/8/20.
@@ -13,11 +13,9 @@ import UIKit
 protocol SearchListViewControllerProtocol: BaseViewProtocol {
     // Update UI with value returned.
     /// Set the view Object of view model
-    func consume(presentables: [SearchListViewPresentable])
+    func consume(presentables: [SearchListViewPresentable]?)
     /// Show alert if failure
     func show(title: String, message: String)
-    
-    func deleteAllPresentables()
 }
 
 // MARK: - SearchListView Module View
@@ -26,7 +24,7 @@ final class SearchListViewController: BaseViewController {
     
     var presenter: SearchListPresenterProtocol!
 
-    private let searchListView = SearchListView()
+    private var searchListView: SearchListViewProtocol = SearchListView()
     private var presentables: [SearchListViewPresentable]?
 
     init() {
@@ -41,7 +39,6 @@ final class SearchListViewController: BaseViewController {
     
     override func loadView() {
         searchListView.delegate = self
-        searchListView.dataSource = self
         view = searchListView
     }
     
@@ -57,17 +54,12 @@ final class SearchListViewController: BaseViewController {
 
 extension SearchListViewController: SearchListViewControllerProtocol {
 
-    func consume(presentables: [SearchListViewPresentable]) {
-        self.presentables = object().flatMap { $0 + presentables } ?? presentables
-        searchListView.reloadData()
+    func consume(presentables: [SearchListViewPresentable]?) {
+        searchListView.consume(data: presentables)
     }
 
     func show(title: String, message: String) {
         showAlert(title: title, message: message)
-    }
-    
-    func deleteAllPresentables() {
-        presentables = nil
     }
 }
 
@@ -94,13 +86,6 @@ extension SearchListViewController: SearchListViewUIDelegate {
     func view(didSelect presentable: SearchListViewPresentable) {
         presenter.view(didSelect: presentable)
     }
-}
-
-// MARK: - SearchListViewUIDataSource - implementation
-
-extension SearchListViewController: SearchListViewDataSource {
-    // Pass data to data source
-    func object() -> [SearchListViewPresentable]? { presentables }
 }
 
 extension SearchListViewController {

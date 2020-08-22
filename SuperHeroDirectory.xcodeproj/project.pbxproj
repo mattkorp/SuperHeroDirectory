@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		460ABE3924F0EC1E004D6106 /* FalseNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460ABE3824F0EC1E004D6106 /* FalseNavigationBarView.swift */; };
+		460ABE3B24F0FE1B004D6106 /* SearchListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460ABE3A24F0FE1B004D6106 /* SearchListViewDataSource.swift */; };
 		46667B5D24ED5AD300508C68 /* SearchListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46667B5C24ED5AD300508C68 /* SearchListState.swift */; };
 		4670740224E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */; };
 		4670740624E3EDC2006228DF /* DetailsInfoViewUITestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469B602724DDE81B00D01913 /* DetailsInfoViewUITestSpec.swift */; };
@@ -85,6 +86,7 @@
 		12F32304169722A3E9DB0B7E /* Pods_SuperHeroDirectory_SuperHeroDirectoryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperHeroDirectory_SuperHeroDirectoryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B21A6F2FDCA8E61316EDB71 /* Pods-SuperHeroDirectory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHeroDirectory.release.xcconfig"; path = "Target Support Files/Pods-SuperHeroDirectory/Pods-SuperHeroDirectory.release.xcconfig"; sourceTree = "<group>"; };
 		460ABE3824F0EC1E004D6106 /* FalseNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseNavigationBarView.swift; sourceTree = "<group>"; };
+		460ABE3A24F0FE1B004D6106 /* SearchListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewDataSource.swift; sourceTree = "<group>"; };
 		46667B5C24ED5AD300508C68 /* SearchListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListState.swift; sourceTree = "<group>"; };
 		4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoViewPresentableMock.swift; sourceTree = "<group>"; };
 		4670740824E40764006228DF /* DetailsViewControllerUITestsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewControllerUITestsSpec.swift; sourceTree = "<group>"; };
@@ -200,6 +202,14 @@
 				62CB3D18355B9E083C55A2D3 /* Pods-SuperHeroDirectoryTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		460ABE3C24F13301004D6106 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				460ABE3A24F0FE1B004D6106 /* SearchListViewDataSource.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		46667B5B24ED5AC500508C68 /* State */ = {
@@ -353,6 +363,7 @@
 		4676F37924DEF72400189E2F /* SearchList */ = {
 			isa = PBXGroup;
 			children = (
+				460ABE3C24F13301004D6106 /* Data */,
 				46EA12E224E1CABC00B8058C /* Module */,
 				4676F38224DF0BCE00189E2F /* View */,
 				46667B5B24ED5AC500508C68 /* State */,
@@ -718,6 +729,7 @@
 				46667B5D24ED5AD300508C68 /* SearchListState.swift in Sources */,
 				4676F37224DEF38800189E2F /* NibLoadable.swift in Sources */,
 				46B4619124E18AAC00A20AAB /* DetailsWireframe.swift in Sources */,
+				460ABE3B24F0FE1B004D6106 /* SearchListViewDataSource.swift in Sources */,
 				4676F34124DEF13500189E2F /* AppDelegate.swift in Sources */,
 				4676F36424DEF38800189E2F /* Request.swift in Sources */,
 				4676F39D24DF2AE800189E2F /* SuperheroDataContainer.swift in Sources */,

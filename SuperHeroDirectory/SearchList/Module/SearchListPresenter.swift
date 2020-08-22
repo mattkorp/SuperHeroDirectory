@@ -49,26 +49,26 @@ extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
         guard state.viewState != .loading else { return }
-        state.set(page: .set,
-                  view: .result(getSuperheroUseCase.fetch(with: state.pageInfo)))
+        state.pageState = .set
+        state.viewState = .result(getSuperheroUseCase.fetch(with: state.pageInfo))
     }
     
     func fetch(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
-        state.set(page: .reset,
-                  view: .result(getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo)))
+        state.pageState = .reset
+        state.viewState = .result(getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo))
     }
     
     func fetchMore(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
         guard state.viewState != .loading else { return }
-        state.set(page: .set,
-                  view: .result(getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo)))
+        state.pageState = .set
+        state.viewState = .result(getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo))
     }
 
     func refresh() {
-        state.set(page: .reset,
-                  view: .result(getSuperheroUseCase.refresh(with: state.pageInfo)))
+        state.pageState = .reset
+        state.viewState = .result(getSuperheroUseCase.refresh(with: state.pageInfo))
     }
     
     func view(didSelect presentable: SearchListViewPresentable) {
@@ -86,7 +86,7 @@ private extension SearchListPresenter {
             view.startLoading()
         case .result(let result):
             if state.pageInfo.offset == 0 {
-                view.deleteAllPresentables()
+                view.consume(presentables: nil)
             }
             result
                 .onSuccess(handleSuccess)

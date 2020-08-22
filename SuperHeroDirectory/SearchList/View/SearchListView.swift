@@ -23,11 +23,11 @@ protocol SearchListViewUIDelegate {
     func refresh()
 }
 
-// MARK: SearchListViewUIDataSource
+// MARK: - SearchListViewProtocol
 
-protocol SearchListViewDataSource {
-    /// Set Object for the UI Component
-    func object() -> [SearchListViewPresentable]?
+protocol SearchListViewProtocol where Self: SearchListView {
+    var delegate: SearchListViewUIDelegate? { get set }
+    func consume(data: [SearchListViewPresentable]?)
 }
 
 // MARK: - SearchListView
@@ -39,8 +39,7 @@ final class SearchListView: UIView {
     var dataSource: SearchListViewDataSource?
 
     // MARK: - Private
-    private var presentables: [SearchListViewPresentable]?
-    // TODO: move tableView and searchView to own classes
+
     private let tableView = TableView()
     private let searchBar = UISearchBar()
     private let refreshControl = UIRefreshControl()
@@ -49,6 +48,8 @@ final class SearchListView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        dataSource = SearchListViewData()
+        dataSource?.delegate = self
         setupUI()
     }
     
@@ -64,12 +65,6 @@ final class SearchListView: UIView {
     // MARK: loading methods
 
     func reloadData() {
-        presentables = dataSource?.object()
-        
-        if presentables?.isEmpty == true {
-            // TODO: show empty message
-        }
-        
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -99,10 +94,10 @@ private extension SearchListView {
         searchBar.delegate = self
         searchBar.placeholder = L10n.SearchList.Searchbar.Placeholder.text
         searchBar.showsCancelButton = true
-        hideKeyboardWhenTappedAround()
+        addDismissKeyboardTapGesture()
         
         addSubview(tableView)
-        tableView.configure(delegate: self, dataSource: self)
+        tableView.configure(delegate: self, dataSource: dataSource)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.refreshControl?.addTarget(self, action: #selector(refetchData), for: .valueChanged)
     }
@@ -115,7 +110,7 @@ private extension SearchListView {
         tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
     }
     
-    func hideKeyboardWhenTappedAround() {
+    func addDismissKeyboardTapGesture() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
         tap.cancelsTouchesInView = false
         tableView.addGestureRecognizer(tap)
@@ -127,35 +122,12 @@ private extension SearchListView {
     }
 }
 
-// MARK: - UITableViewDataSource
-
-extension SearchListView: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int { 1 }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presentables?.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-        configure(cell, title: presentables?[indexPath.row].name)
-        
-        return cell
-    }
-    
-    func configure(_ cell: UITableViewCell, title: String?) {
-        cell |> searchListCellStyle
-        cell.textLabel?.text = title
-    }
-}
-
 // MARK: - UITableViewDelegate
 
 extension SearchListView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let hero = presentables?[indexPath.row] else { return }
+        guard let hero = dataSource?.objects?[indexPath.row] else { return }
         delegate?.view(didSelect: hero)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -195,5 +167,23 @@ extension SearchListView: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         endSearchBarEditing(searchBar)
         refetchData()
+    }
+}
+
+// MARK: - SearchListViewDataSourceDelegate implementation
+
+extension SearchListView: SearchListViewDataSourceDelegate {
+    
+    func dataSourceDidUpdate() {
+        reloadData()
+    }
+}
+
+// MARK: - SearchListViewProtocol implementation
+
+extension SearchListView: SearchListViewProtocol {
+    
+    func consume(data: [SearchListViewPresentable]?) {
+        dataSource?.objects = data
     }
 }
