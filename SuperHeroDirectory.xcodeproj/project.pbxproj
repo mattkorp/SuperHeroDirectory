@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		460ABE3924F0EC1E004D6106 /* FalseNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460ABE3824F0EC1E004D6106 /* FalseNavigationBarView.swift */; };
 		460ABE3B24F0FE1B004D6106 /* SearchListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460ABE3A24F0FE1B004D6106 /* SearchListViewDataSource.swift */; };
+		460ABE3E24F133C5004D6106 /* SearchListViewSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460ABE3D24F133C5004D6106 /* SearchListViewSearchBar.swift */; };
 		46667B5D24ED5AD300508C68 /* SearchListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46667B5C24ED5AD300508C68 /* SearchListState.swift */; };
 		4670740224E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */; };
 		4670740624E3EDC2006228DF /* DetailsInfoViewUITestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469B602724DDE81B00D01913 /* DetailsInfoViewUITestSpec.swift */; };
@@ -87,6 +88,7 @@
 		3B21A6F2FDCA8E61316EDB71 /* Pods-SuperHeroDirectory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperHeroDirectory.release.xcconfig"; path = "Target Support Files/Pods-SuperHeroDirectory/Pods-SuperHeroDirectory.release.xcconfig"; sourceTree = "<group>"; };
 		460ABE3824F0EC1E004D6106 /* FalseNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalseNavigationBarView.swift; sourceTree = "<group>"; };
 		460ABE3A24F0FE1B004D6106 /* SearchListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewDataSource.swift; sourceTree = "<group>"; };
+		460ABE3D24F133C5004D6106 /* SearchListViewSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListViewSearchBar.swift; sourceTree = "<group>"; };
 		46667B5C24ED5AD300508C68 /* SearchListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListState.swift; sourceTree = "<group>"; };
 		4670740124E3EA3E006228DF /* DetailsInfoViewPresentableMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoViewPresentableMock.swift; sourceTree = "<group>"; };
 		4670740824E40764006228DF /* DetailsViewControllerUITestsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewControllerUITestsSpec.swift; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 			children = (
 				4676F38424DF0BCE00189E2F /* SearchListViewModel.swift */,
 				4676F38624DF0BCE00189E2F /* SearchListView.swift */,
+				460ABE3D24F133C5004D6106 /* SearchListViewSearchBar.swift */,
 				4676F38724DF0BCE00189E2F /* SearchListViewController.swift */,
 			);
 			path = View;
@@ -749,6 +752,7 @@
 				4698577124E92D0900B3FCA9 /* PaginationUseCase.swift in Sources */,
 				46BB297924E073E6005AB129 /* APIKeys.swift in Sources */,
 				4676F36524DEF38800189E2F /* Task.swift in Sources */,
+				460ABE3E24F133C5004D6106 /* SearchListViewSearchBar.swift in Sources */,
 				4676F3A524DF367400189E2F /* RawSuperheroData.swift in Sources */,
 				4676F38E24DF0BCE00189E2F /* SearchListViewModel.swift in Sources */,
 				4676F39824DF1B2F00189E2F /* GetSuperheroUseCase.swift in Sources */,

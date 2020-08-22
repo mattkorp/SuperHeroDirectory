@@ -41,7 +41,7 @@ final class SearchListView: UIView {
     // MARK: - Private
 
     private let tableView = TableView()
-    private let searchBar = UISearchBar()
+    private let searchBar = SearchListViewSearchBar()
     private let refreshControl = UIRefreshControl()
 
     // MARK: - viewcontroller lifecycle
@@ -91,15 +91,12 @@ private extension SearchListView {
 
     func setupUI() {
         addSubview(searchBar)
-        searchBar.delegate = self
-        searchBar.placeholder = L10n.SearchList.Searchbar.Placeholder.text
-        searchBar.showsCancelButton = true
-        addDismissKeyboardTapGesture()
-        
         addSubview(tableView)
+        searchBar.searchDelegate = self
         tableView.configure(delegate: self, dataSource: dataSource)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.refreshControl?.addTarget(self, action: #selector(refetchData), for: .valueChanged)
+        addDismissKeyboardTapGesture()
     }
 
     func setupConstraints() {
@@ -116,9 +113,9 @@ private extension SearchListView {
         tableView.addGestureRecognizer(tap)
     }
     
-    func endSearchBarEditing(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.endEditing(true)
+    @objc
+    func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        searchBar.endSearchBarEditing()
     }
 }
 
@@ -134,39 +131,15 @@ extension SearchListView: UITableViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 
-        // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
 
-        // Change 10.0 to adjust the distance from bottom
+        // fetch more data when user pulls up on cell (> constant)
         if maximumOffset - currentOffset <= 10.0 {
             searchBar.text.flatMap {
                 $0.isEmpty ? delegate?.fetch() : delegate?.fetchMore(searchText: $0)
             }
         }
-    }
-}
-
-// MARK: - UISearchBarDelegate
-
-extension SearchListView: UISearchBarDelegate {
-
-    @objc
-    func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        endSearchBarEditing(searchBar)
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        delegate?.fetch(searchText: searchText)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        endSearchBarEditing(searchBar)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        endSearchBarEditing(searchBar)
-        refetchData()
     }
 }
 
@@ -185,5 +158,18 @@ extension SearchListView: SearchListViewProtocol {
     
     func consume(data: [SearchListViewPresentable]?) {
         dataSource?.objects = data
+    }
+}
+
+// MARK: - SearchListViewSearchBarDelegate implementation
+
+extension SearchListView: SearchListViewSearchBarDelegate {
+    
+    func searchBarDidChange(text: String) {
+        delegate?.fetch(searchText: text)
+    }
+    
+    func searchBarCancelButtonTapped() {
+        refetchData()
     }
 }
