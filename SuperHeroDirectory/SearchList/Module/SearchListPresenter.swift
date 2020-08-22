@@ -32,14 +32,14 @@ final class SearchListPresenter {
     
     private let getSuperheroUseCase: GetSuperheroUseCaseProtocol
     
-    private var state: SearchListState {
+    private var state: SearchListStateProtocol {
         didSet { updateView(with: state.viewState) }
     }
     
     init(getSuperheroUseCase: GetSuperheroUseCaseProtocol,
          paginationUseCase: PaginationUseCaseProtocol) {
         self.getSuperheroUseCase = getSuperheroUseCase
-        self.state = SearchListState(paginationUseCase: paginationUseCase)
+        state = SearchListState(paginationUseCase: paginationUseCase)
     }
 }
 
@@ -49,26 +49,26 @@ extension SearchListPresenter: SearchListPresenterProtocol {
     
     func fetch() {
         guard state.viewState != .loading else { return }
-        state.pageState = .set
-        state.viewState = .result(getSuperheroUseCase.fetch(with: state.pageInfo))
+        state.set(page: .set,
+                  view: .result(getSuperheroUseCase.fetch(with: state.pageInfo)))
     }
     
     func fetch(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
-        state.pageState = .reset
-        state.viewState = .result(getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo))
+        state.set(page: .reset,
+                  view: .result(getSuperheroUseCase.fetch(startsWith: startsWith, pageInfo: state.pageInfo)))
     }
     
     func fetchMore(startsWith: String) {
         guard startsWith.count >= Constants.minSearchLength else { return }
         guard state.viewState != .loading else { return }
-        state.pageState = .set
-        state.viewState = .result(getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo))
+        state.set(page: .set,
+                  view: .result(getSuperheroUseCase.fetchMore(startsWith: startsWith, pageInfo: state.pageInfo)))
     }
 
     func refresh() {
-        state.pageState = .reset
-        state.viewState = .result(getSuperheroUseCase.refresh(with: state.pageInfo))
+        state.set(page: .reset,
+                  view: .result(getSuperheroUseCase.refresh(with: state.pageInfo)))
     }
     
     func view(didSelect presentable: SearchListViewPresentable) {
@@ -85,6 +85,9 @@ private extension SearchListPresenter {
         case .loading:
             view.startLoading()
         case .result(let result):
+            if state.pageInfo.offset == 0 {
+                view.deleteAllPresentables()
+            }
             result
                 .onSuccess(handleSuccess)
                 .onFailure(handleError)

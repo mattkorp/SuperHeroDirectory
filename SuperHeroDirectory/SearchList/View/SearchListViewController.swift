@@ -16,6 +16,8 @@ protocol SearchListViewControllerProtocol: BaseViewProtocol {
     func consume(presentables: [SearchListViewPresentable])
     /// Show alert if failure
     func show(title: String, message: String)
+    
+    func deleteAllPresentables()
 }
 
 // MARK: - SearchListView Module View
@@ -56,12 +58,16 @@ final class SearchListViewController: BaseViewController {
 extension SearchListViewController: SearchListViewControllerProtocol {
 
     func consume(presentables: [SearchListViewPresentable]) {
-        self.presentables = self.presentables.flatMap { $0 + presentables } ?? presentables
+        self.presentables = object().flatMap { $0 + presentables } ?? presentables
         searchListView.reloadData()
     }
 
     func show(title: String, message: String) {
         showAlert(title: title, message: message)
+    }
+    
+    func deleteAllPresentables() {
+        presentables = nil
     }
 }
 
@@ -70,7 +76,6 @@ extension SearchListViewController: SearchListViewControllerProtocol {
 extension SearchListViewController: SearchListViewUIDelegate {
     
     func fetch(searchText: String) {
-        presentables = nil
         presenter.fetch(startsWith: searchText)
     }
     
@@ -83,7 +88,6 @@ extension SearchListViewController: SearchListViewUIDelegate {
     }
 
     func refresh() {
-        presentables = nil
         presenter.refresh()
     }
 

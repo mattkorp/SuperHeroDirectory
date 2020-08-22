@@ -8,7 +8,14 @@
 
 import Foundation
 
-struct SearchListState {
+protocol SearchListStateProtocol {
+    var pageInfo: PageInfo { get }
+    var viewState: SearchListState.ViewState { get }
+    mutating func set(page: SearchListState.PaginationState,
+                      view: SearchListState.ViewState)
+}
+
+struct SearchListState: SearchListStateProtocol {
     
     var paginationUseCase: PaginationUseCaseProtocol
     var pageInfo: PageInfo { paginationUseCase.pageInfo }
@@ -19,7 +26,12 @@ struct SearchListState {
             viewState = .loading
         }
     }
-                    
+        
+    mutating func set(page: PaginationState, view: ViewState) {
+        pageState = page
+        viewState = view
+    }
+
     enum PaginationState {
         case set
         case reset
