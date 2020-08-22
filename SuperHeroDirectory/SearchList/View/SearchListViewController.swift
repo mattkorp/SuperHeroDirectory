@@ -47,7 +47,7 @@ final class SearchListViewController: BaseViewController {
         super.viewDidLoad()
         title = L10n.SearchList.Navigation.title
         presenter.refresh()
-        tapLabelToScrollToTheTop()
+        addFalseNavBar()
     }
 }
 
@@ -101,15 +101,10 @@ extension SearchListViewController: SearchListViewDataSource {
 
 extension SearchListViewController {
     /// Set gesture recognizer to scroll to top of list if nav bar is tapped
-    func tapLabelToScrollToTheTop() {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        label.text = navigationItem.title
-        label |> navigationItemTextStyle
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        label.addGestureRecognizer(tapGestureRecognizer)
-        label.isUserInteractionEnabled = true
-        navigationItem.titleView = label
+    func addFalseNavBar() {
+        let titleView = FalseNavigationBarView(title: navigationItem.title)
+        titleView.addTapGesture(target: self, action: #selector(labelTapped))
+        navigationItem.titleView = titleView
     }
         
     @objc
